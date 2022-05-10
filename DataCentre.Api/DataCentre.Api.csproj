@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="nlog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DataCentre.Api.Contracts">
+      <HintPath>..\DataCentre.Api.Repository\bin\Debug\net6.0\DataCentre.Api.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="DataCentre.Api.Entity">
+      <HintPath>..\DataCentre.Api.Entity\bin\Debug\net6.0\DataCentre.Api.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="DataCentre.Api.LoggerService">
+      <HintPath>..\DataCentre.Api.LoggerService\bin\Debug\net6.0\DataCentre.Api.LoggerService.dll</HintPath>
+    </Reference>
+    <Reference Include="DataCentre.Api.Repository">
+      <HintPath>..\DataCentre.Api.Repository\bin\Debug\net6.0\DataCentre.Api.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="DataCentre.Api.Utility">
+      <HintPath>..\DataCentre.Api.Utility\bin\Debug\net6.0\DataCentre.Api.Utility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
