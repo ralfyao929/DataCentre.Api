@@ -9,7 +9,6 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerServices();
 builder.Services.ConfigureMySqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryWrapper();
-//builder.Entity
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -31,7 +30,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions()
 }) ;
 app.UseCors("CorsPolicy");
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
