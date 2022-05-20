@@ -1,5 +1,5 @@
 # DataCentre.Api
-###### 這個專案使用Micorsoft Entity Framework
+###### 這個專案使用Micorsoft Entity Framework，專用於果核帳務系統的後端帳務資料處理
 ###### 這個專案包含的子專案與說明，分別如下：
 - **_DataCentre.Api_**
   - 果核雲端帳務WebApi主要網站專案
