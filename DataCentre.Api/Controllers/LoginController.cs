@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace DataCentre.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class LoginController : Controller
     {
         private static ILoggerManager _logger;
@@ -36,7 +36,7 @@ namespace DataCentre.Api.Controllers
             }
             return Utility.Utility.GetFailJsonStr("1001", "帳號或密碼錯誤");
         }
-
+        
         private Token GetToken(string username)
         {
             Token token = Token.Create(username);
