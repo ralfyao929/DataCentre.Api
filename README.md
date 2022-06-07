@@ -41,4 +41,4 @@
     - ![2022-06-07_09-19-33](https://user-images.githubusercontent.com/70353579/172275518-95602843-6f65-4bf0-89ac-5431770de6b8.png)
     - 在 **_RepositoryContext_** 內，就必須在OnModelCreateing使用HasKey()來指定該Table的Key：
     - ![2022-06-07_09-18-51](https://user-images.githubusercontent.com/70353579/172275681-7f722fe4-e810-49b8-918d-74358ab34008.png)
-
+2. 所有的Controller都要繼承BaseController
