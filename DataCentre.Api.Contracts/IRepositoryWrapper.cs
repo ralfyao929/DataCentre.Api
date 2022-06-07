@@ -8,7 +8,8 @@ namespace DataCentre.Api.Contracts
 {
     public interface IRepositoryWrapper
     {
-        ILoginDataRepository loginData { get; }
+        ILoginDataRepository LoginData { get; }
+        IUserPrivilegeRepository UserPrivilege { get; }
         //TO-DO Add Data Repository here...
         void Save();
     }

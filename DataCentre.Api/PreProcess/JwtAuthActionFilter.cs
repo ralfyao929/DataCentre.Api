@@ -3,7 +3,8 @@ using Jose;
 using System.Net;
 using System.Text;
 using System.Web.Http.Controllers;
-using System.Web.Http.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace DataCentre.Api.PreProcess
 {
@@ -22,11 +23,12 @@ namespace DataCentre.Api.PreProcess
     }
      *
      */
+    //[Filter]
     public class JwtAuthActionFilter : ActionFilterAttribute
     {
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            if (actionContext.Request.Headers.Authorization == null)
+            if (string.IsNullOrEmpty(actionContext.HttpContext.Request.Headers.Authorization))
             {
                 setErrorResponse(actionContext, "驗證錯誤");
             }
@@ -35,27 +37,33 @@ namespace DataCentre.Api.PreProcess
                 try
                 {
                     var jwtObject = Jose.JWT.Decode<JwtAuthObject>(
-                        actionContext.Request.Headers.Authorization.Parameter,
+                        actionContext.HttpContext.Request.Headers.Authorization,
                         Encoding.UTF8.GetBytes(Utility.Utility.key),
                         JwsAlgorithm.HS256);
                     if(jwtObject.exp.CompareTo(DateTime.Now) < 0)
                     {
                         setErrorResponse(actionContext, "憑證過期");
+                        //return;
                     }
                 }
                 catch (Exception ex)
                 {
                     setErrorResponse(actionContext, ex.Message);
+                    //return;
                 }
             }
-
             base.OnActionExecuting(actionContext);
         }
 
-        private static void setErrorResponse(HttpActionContext actionContext, string message)
+        private static void setErrorResponse(ActionExecutingContext actionContext, string message)
         {
-            var response = actionContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, message);
-            actionContext.Response = response;
+            actionContext.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = message;
+            actionContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
+
+        //public Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
+        //{
+        //    //throw new NotImplementedException();
+        //}
     }
 }

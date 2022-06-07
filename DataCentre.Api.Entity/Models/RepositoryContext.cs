@@ -13,12 +13,15 @@ namespace DataCentre.Api.Entity.Models
         {
 
         }
-        public DbSet<LoginData> loginDatas { get; set; }
+        public DbSet<LoginData> LoginDatas { get; set; }
+        public DbSet<UserPrivilege> UserPrivileges { get; set; }
+        public DbSet<APILog> APILogs { get; set; }
 
         //TO-DO add Model DbSet here...
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<LoginData>().HasNoKey();
+            builder.Entity<UserPrivilege>().HasKey(table => new { table.PrivilegeGroup, table.PrivilegeId });
             base.OnModelCreating(builder);
         }
     }

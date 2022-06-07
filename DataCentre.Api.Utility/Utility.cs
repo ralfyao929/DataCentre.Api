@@ -6,9 +6,11 @@ namespace DataCentre.Api.Utility
     public class Utility
     {
         //金鑰，從設定檔或資料庫取得
-        public static string key = "69AE7254-2E71-4BD2-939A-366FDB65BD71";
+        public static string key;
         public static string GetSuccessJsonStr(string data)
         {
+            //Result rs = new Result();
+
             return "{'code':'0000','message':'Success','result':{'data':" + data + "}}";
         }
         

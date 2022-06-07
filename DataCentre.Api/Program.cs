@@ -1,4 +1,5 @@
 using DataCentre.Api.Extensions;
+using DataCentre.Api.PreProcess;
 using NLog;
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -9,6 +10,8 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerServices();
 builder.Services.ConfigureMySqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryWrapper();
+builder.Services.ConfigureConstants(builder.Configuration);
+builder.Services.ConfigureFilterServices();
 builder.Services.AddControllers();
 
 var app = builder.Build();

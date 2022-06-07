@@ -25,21 +25,23 @@ namespace DataCentre.Api.Controllers
         public string Post(LoginData name)
         {
             _logger.LogInfo("login user name:"+name.Username+", password:"+name.Password);
-            var logins = _repositoryWrapper.loginData.FindByCondition(l => l.Username == name.Username);
+            List<LoginData> logins = _repositoryWrapper.LoginData.FindByCondition(l => l.Username == name.Username).ToList();
+            
             if (logins.Count() > 0)
             {
                 _logger.LogInfo("has data");
                 LoginDataView loginView = new LoginDataView();
                 loginView.loginData = (LoginData)logins.ToList()[0];
-                loginView.Token = GetToken(loginView.loginData.Username);
+                loginView.Token = GetToken(loginView.loginData, _repositoryWrapper);
                 return Utility.Utility.GetSuccessJsonStr(JsonConvert.SerializeObject(loginView));
             }
             return Utility.Utility.GetFailJsonStr("1001", "帳號或密碼錯誤");
         }
         
-        private Token GetToken(string username)
+        private Token GetToken(LoginData User, IRepositoryWrapper RepositoryWrapper)
         {
-            Token token = Token.Create(username);
+
+            Token token = Token.Create(User, RepositoryWrapper);
             return token;
         }
     }

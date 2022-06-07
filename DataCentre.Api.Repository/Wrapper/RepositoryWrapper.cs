@@ -16,10 +16,9 @@ namespace DataCentre.Api.Repository.Wrapper
             _repositoryContext = context;
         }
         private ILoginDataRepository _login;
-        //public ILoginDataRepository Login
-        
+        private IUserPrivilegeRepository _userPrivilege;
 
-        public ILoginDataRepository loginData
+        public ILoginDataRepository LoginData
         {
             get
             {
@@ -30,7 +29,17 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _login;
             }
         }
-
+        public IUserPrivilegeRepository UserPrivilege
+        {
+            get
+            {
+                if (_userPrivilege == null)
+                {
+                    _userPrivilege = new UserPrivilegeRepository(_repositoryContext);
+                }
+                return _userPrivilege;
+            }
+        }
         //public ILoginDataRepository loginData => throw new NotImplementedException();
 
         public void Save()

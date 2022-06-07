@@ -1,4 +1,5 @@
-﻿using DataCentre.Api.Entity.Models;
+﻿using DataCentre.Api.Contracts;
+using DataCentre.Api.Entity.Models;
 using Jose;
 using Newtonsoft.Json;
 using System.Text;
@@ -16,19 +17,21 @@ namespace DataCentre.Api.Models.Authentication
         ////幾秒過期
         //public int expires_in { get; set; }
         //產生 Token
-        public static Token Create(string user)
+        public static Token Create(LoginData User, IRepositoryWrapper RepositoryWrapper)
         {
             var exp = 1200;   //過期時間(秒)
             var payload = new JwtAuthObject()
             {
-                Id = user,
-                exp = DateTime.Now.AddSeconds(exp)
+                Id = User.Username,
+                exp = DateTime.Now.AddSeconds(exp),
+                PrivilegeList = (RepositoryWrapper.UserPrivilege.FindByCondition(u => u.PrivilegeGroup == User.PrivilegeGroup)).ToList()
             };
             return new Token()
             {
                 RESULT = true,
                 TOKEN = Jose.JWT.Encode(payload, Encoding.UTF8.GetBytes(Utility.Utility.key), JwsAlgorithm.HS256)
             };
+            //Jose.JWT.Decode(token, )
         }
         
     }
