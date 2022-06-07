@@ -8,14 +8,13 @@ namespace DataCentre.Api.Controllers
     [ApiController]
     [ServiceFilter(typeof(JwtAuthActionFilter))]
     [Route("api/[controller]/data")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private static ILoggerManager _logger;
         private IRepositoryWrapper _repositoryWrapper;
-        public HomeController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper)
+        public HomeController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper) : base(Logger, RepositoryWrapper)
         {
-            _logger = Logger;
-            _repositoryWrapper = RepositoryWrapper;
+            
         }
         [HttpGet]
         public string Get()

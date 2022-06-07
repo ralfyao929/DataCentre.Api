@@ -12,14 +12,11 @@ namespace DataCentre.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
-        private static ILoggerManager _logger;
-        private IRepositoryWrapper _repositoryWrapper;
-        public LoginController(ILoggerManager logger, IRepositoryWrapper repositoryWrapper)
+        public LoginController(ILoggerManager logger, IRepositoryWrapper repositoryWrapper) : base(logger, repositoryWrapper)
         {
-            _logger = logger;
-            _repositoryWrapper = repositoryWrapper;
+            
         }
         [HttpPost]
         public string Post(LoginData name)
