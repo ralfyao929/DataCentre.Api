@@ -1,4 +1,5 @@
 ﻿using DataCentre.Api.Contracts;
+using DataCentre.Api.Entity.Models;
 using DataCentre.Api.LoggerService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,5 +14,9 @@ namespace DataCentre.Api.Controllers
             _logger = Logger;
             _repositoryWrapper = RepositoryWrapper;
         }
+        //protected RepositoryContext GetRepositoryContext()
+        //{
+        //    return _repositoryWrapper.
+        //}
     }
 }

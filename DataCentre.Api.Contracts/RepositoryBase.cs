@@ -16,6 +16,11 @@ namespace DataCentre.Api.Contracts
         {
             RepositoryContext = repositoryContext;
         }
+
+        public RepositoryContext GetRepositoryContext()
+        {
+            return RepositoryContext;
+        }
         public void Create(T entity)
         {
             RepositoryContext.Set<T>().Add(entity);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCentre.Api.Entity.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ namespace DataCentre.Api.Contracts
     {
         ILoginDataRepository LoginData { get; }
         IUserPrivilegeRepository UserPrivilege { get; }
+        IAPILogRepository APILog { get; }
+        RepositoryContext GetRepositoryContext();
+        //RepositoryContext GetRe
         //TO-DO Add Data Repository here...
         void Save();
     }

@@ -23,7 +23,7 @@ namespace DataCentre.Api.Controllers
         {
             _logger.LogInfo("login user name:"+name.Username+", password:"+name.Password);
             List<LoginData> logins = _repositoryWrapper.LoginData.FindByCondition(l => l.Username == name.Username).ToList();
-            
+            //_repositoryWrapper.GetRepositoryContext();
             if (logins.Count() > 0)
             {
                 _logger.LogInfo("has data");

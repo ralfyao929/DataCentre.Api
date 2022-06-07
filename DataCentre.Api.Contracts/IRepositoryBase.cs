@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataCentre.Api.Entity.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,6 +15,6 @@ namespace DataCentre.Api.Contracts
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
-
+        RepositoryContext GetRepositoryContext();
     }
 }
