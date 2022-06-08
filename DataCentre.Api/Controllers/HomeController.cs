@@ -5,6 +5,7 @@ using DataCentre.Api.Models.Authentication;
 using DataCentre.Api.PreProcess;
 using Jose;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace DataCentre.Api.Controllers
@@ -27,12 +28,13 @@ namespace DataCentre.Api.Controllers
                         Encoding.UTF8.GetBytes(Utility.Utility.key),
                         JwsAlgorithm.HS256);
             RepositoryContext context = _repositoryWrapper.GetRepositoryContext();
+            // Get Privilege List.
             var privList = from privilegeList in jwtObject.PrivilegeList
                          join privilege in context.Set<PrivilegeData>() on privilegeList.PrivilegeId equals privilege.Id
                          select new { privilege.Id, privilege.PrivilegeName, privilege.PrivilegeType };
-                         //join privData in 
-            
-            return "";
+            // Get Notify Json List.
+            string notifyJson = "null";
+            return Utility.Utility.GetSuccessJsonStr("\"data\":" + JsonConvert.SerializeObject(privList.ToList()) + ",\"nofity\":" + notifyJson);
         }
     }
 }
