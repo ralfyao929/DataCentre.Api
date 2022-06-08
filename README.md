@@ -43,4 +43,6 @@
     - ![2022-06-07_09-18-51](https://user-images.githubusercontent.com/70353579/172275681-7f722fe4-e810-49b8-918d-74358ab34008.png)
 2. 所有的Controller都要繼承BaseController，並且建構子也要呼叫父類別的建構子
     - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
+3. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
+    - ![2022-06-08_08-26-14](https://user-images.githubusercontent.com/70353579/172505945-6ca83448-029d-401a-82a9-9155d806f155.png)
 
