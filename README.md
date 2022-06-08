@@ -17,6 +17,8 @@
 1. 建立Model：
     - 在 **_DataCentre.Api.Entity_** 專案下，建立與資料表溝通的類別
     - ![2022-05-10_08-55-21](https://user-images.githubusercontent.com/70353579/167521621-855fbafc-9721-4764-abcd-52717a576900.png)
+    - 注意要補上[Table("")]指示：
+    - ![2022-06-08_11-50-21](https://user-images.githubusercontent.com/70353579/172527746-fc9ca953-b59e-4463-be51-15f3ee73feaa.png)
     - 在 **_DataCentre.Api.Entity_** 專案下 ，找出RepositoryContext類別，並在該類別程式碼內加上上面所建類別的DbSet物件：
     - ![2022-05-10_08-57-32](https://user-images.githubusercontent.com/70353579/167521856-85f9f9fb-7461-4df1-b3e8-0ba5ecff0d38.png)
 2. 建立Contract：
@@ -47,6 +49,5 @@
     - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
 3. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
     - ![2022-06-08_08-26-14](https://user-images.githubusercontent.com/70353579/172505945-6ca83448-029d-401a-82a9-9155d806f155.png)
-4. Entity內的每個類別都要加上[Table("<C Name>")]，如下圖所示：
-    - ![2022-06-08_11-50-21](https://user-images.githubusercontent.com/70353579/172527746-fc9ca953-b59e-4463-be51-15f3ee73feaa.png)
+    
 
