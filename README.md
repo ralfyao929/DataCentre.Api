@@ -38,7 +38,7 @@
     - ![2022-05-20_11-22-11](https://user-images.githubusercontent.com/70353579/169444150-5e9c1e74-49ea-4645-a738-5def74d3aa04.png)
     - 程式碼要繼承BaseController，並且呼叫父類別的建構子：
     - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
-    - 善用這兩個物件，對於建構Controller會有很大的幫助：
+    - 善用繼承自父類別的這兩個物件，對於建構Controller會有很大的幫助：
     - ![2022-05-20_11-27-39](https://user-images.githubusercontent.com/70353579/169444686-2065cbcf-86ce-4303-a708-cc3a4a518d45.png)
 > # 注意要點
 1. 如果一個Table有多個Key，如以下的Table - UserPrivilege：
