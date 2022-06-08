@@ -27,6 +27,8 @@
     - ![2022-05-10_09-13-22](https://user-images.githubusercontent.com/70353579/167523149-c38b5120-dcc3-4ab7-aace-8ffbb505057f.png)
     - 回到 **_DataCentre.Api.Contracts_** 專案，在IRepositoryWrapper介面內，增加一個上面所建立的I<[ModelName]>DataRepository成員：
     - ![2022-05-10_09-17-49](https://user-images.githubusercontent.com/70353579/167523672-309d3406-ecb7-40e5-b8c6-8221063d0a0f.png)
+    - 在RepositoryWrapper內加上 I<ModelName>Repository的成員，與實作在上面所IRepositoryWrapper介面新增的I<[ModelName]>DataRepository成員，的get函式：
+    - ![2022-06-08_11-32-59](https://user-images.githubusercontent.com/70353579/172526078-e28bf627-8418-451c-ba54-b0583eaf047a.png)
 5. 之後就可以在Controller內使用該Repository函式：
     - ![2022-05-10_09-21-34](https://user-images.githubusercontent.com/70353579/167523961-792d6ec4-40ce-4311-b215-c70f76d65898.png)
 6. 建立Controller：
