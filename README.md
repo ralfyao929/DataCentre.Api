@@ -47,4 +47,6 @@
     - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
 3. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
     - ![2022-06-08_08-26-14](https://user-images.githubusercontent.com/70353579/172505945-6ca83448-029d-401a-82a9-9155d806f155.png)
+4. Entity內的每個類別都要加上[Table("<Model Name>")]，如下圖所示：
+    - ![2022-06-08_11-50-21](https://user-images.githubusercontent.com/70353579/172527746-fc9ca953-b59e-4463-be51-15f3ee73feaa.png)
 
