@@ -36,6 +36,8 @@
 6. 建立Controller：
     - 在 **_DataCentre.Api_** 專案下，右鍵點選Controller-->加入-->控制器：
     - ![2022-05-20_11-22-11](https://user-images.githubusercontent.com/70353579/169444150-5e9c1e74-49ea-4645-a738-5def74d3aa04.png)
+    - 程式碼要繼承BaseController，並且呼叫父類別的建構子：
+    - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
     - 在Controller程式碼內，增加ILoggerManager與IRepositoryWrapper成員，並新增建構子，帶入兩成員參數，並初始兩成員的物件：
     - ![2022-05-20_11-24-37](https://user-images.githubusercontent.com/70353579/169444412-45cd9eb0-d788-47b4-b0ad-a378d3610870.png)
     - 善用這兩個物件，對於建構Controller會有很大的幫助：
@@ -45,9 +47,7 @@
     - ![2022-06-07_09-19-33](https://user-images.githubusercontent.com/70353579/172275518-95602843-6f65-4bf0-89ac-5431770de6b8.png)
     - 在 **_RepositoryContext_** 內，就必須在OnModelCreateing使用HasKey()來指定該Table的Key：
     - ![2022-06-07_09-18-51](https://user-images.githubusercontent.com/70353579/172275681-7f722fe4-e810-49b8-918d-74358ab34008.png)
-2. 所有的Controller都要繼承BaseController，並且建構子也要呼叫父類別的建構子
-    - ![2022-06-07_16-28-56](https://user-images.githubusercontent.com/70353579/172334257-7454e4d1-e52b-4ea6-984f-dc6c8a625e9e.png)
-3. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
+2. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
     - ![2022-06-08_08-26-14](https://user-images.githubusercontent.com/70353579/172505945-6ca83448-029d-401a-82a9-9155d806f155.png)
     
 
