@@ -31,23 +31,22 @@ namespace DataCentre.Api.Controllers
             // FROM `LoginData` AS `l`
             // INNER JOIN `UserPrivileges` AS `u` ON `l`.`PrivilegeGroup` = `u`.`PrivilegeGroup`
             // WHERE `l`.`Username` = '{name.Username}'
-            
-            // 取得DbSet Table做Join查詢.
-            // RepositoryContext context = _repositoryWrapper.GetRepositoryContext();
-            // 實際查詢資料.
-            // var queryResult = from user in context.Set<LoginData>()
-            //                  join privilege in context.Set<UserPrivilege>()
-            //                  on user.PrivilegeGroup equals privilege.PrivilegeGroup
-            //                  where user.Username == name.Username
-            //                  select new { user, privilege };
 
+            // 取得DbSet Table做Join查詢.
+            //RepositoryContext context = _repositoryWrapper.GetRepositoryContext();
+            // 實際查詢資料.
+            //var queryResult = from user in context.Set<LoginData>()
+            //                  join privilege in context.Set<UserPrivilege>()
+            //                  on user.PrivilegeGroup equals privilege.PrivilegeGroup into Grouping
+            //                  where user.Username == name.Username
+            //                  select new { user.Username, Grouping };
             if (logins.Count() > 0)
             {
                 _logger.LogInfo("has data");
                 LoginDataView loginView = new LoginDataView();
                 loginView.loginData = (LoginData)logins.ToList()[0];
                 loginView.Token = GetToken(loginView.loginData, _repositoryWrapper);
-                return Utility.Utility.GetSuccessJsonStr(JsonConvert.SerializeObject(loginView));
+                return Utility.Utility.GetSuccessJsonStr("'data':"+JsonConvert.SerializeObject(loginView));
             }
             return Utility.Utility.GetFailJsonStr("1001", "帳號或密碼錯誤");
         }

@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Entity.Models
 {
-    [Table("UserPrivileges")]
-    public class UserPrivilege
+    [Table("PrivilegeData")]
+    public class PrivilegeData
     {
-        public string PrivilegeGroup { get; set; }
-        public int PrivilegeId { get; set; }
-        public DateTime CreateDate { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public string PrivilegeName { get; set; }
+        public int PrivilegeType { get; set; }
     }
 }

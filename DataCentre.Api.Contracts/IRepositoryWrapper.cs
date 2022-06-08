@@ -12,6 +12,7 @@ namespace DataCentre.Api.Contracts
         ILoginDataRepository LoginData { get; }
         IUserPrivilegeRepository UserPrivilege { get; }
         IAPILogRepository APILog { get; }
+        IPrivilegeDataRepository PrivilegeDataRepository { get; }
         RepositoryContext GetRepositoryContext();
         //RepositoryContext GetRe
         //TO-DO Add Data Repository here...

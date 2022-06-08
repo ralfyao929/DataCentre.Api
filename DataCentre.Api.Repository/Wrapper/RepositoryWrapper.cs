@@ -18,6 +18,7 @@ namespace DataCentre.Api.Repository.Wrapper
         private ILoginDataRepository _login;
         private IUserPrivilegeRepository _userPrivilege;
         private IAPILogRepository _apiLog;
+        private IPrivilegeDataRepository _privilegeData;
 
         public ILoginDataRepository LoginData
         {
@@ -46,14 +47,26 @@ namespace DataCentre.Api.Repository.Wrapper
         {
             get
             {
-                if (_apiLog == null)
+                if (_privilegeData == null)
                 {
                     _apiLog = new APILogRepository(_repositoryContext);
                 }
                 return _apiLog;
             }
         }
-        //public ILoginDataRepository loginData => throw new NotImplementedException();
+
+        public IPrivilegeDataRepository PrivilegeDataRepository 
+        {
+            get
+            {
+                if (_privilegeData == null)
+                {
+                    _privilegeData = new PrivilegeDataRepository(_repositoryContext);
+                }
+                return _privilegeData;
+            }
+        }
+
         public RepositoryContext GetRepositoryContext()
         {
             return _repositoryContext;

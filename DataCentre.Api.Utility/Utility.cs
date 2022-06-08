@@ -11,12 +11,12 @@ namespace DataCentre.Api.Utility
         {
             //Result rs = new Result();
 
-            return "{'code':'0000','message':'Success','result':{'data':" + data + "}}";
+            return "{\"code\":\"0000\",\"message\":\"Success\",\"result\":{" + data + "}}";
         }
         
         public static string GetFailJsonStr(string code, string message)
         {
-            return "{'code':'"+ code + "','message':'"+ message + "','result':null}";
+            return "{\"code\":'" + code + "\",\"message\":'" + message + "\",\"result\":null}";
         }
         //產生 HMACSHA256 雜湊
         public static string ComputeHMACSHA256(string data, string key)
