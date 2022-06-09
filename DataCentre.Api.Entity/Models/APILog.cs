@@ -12,6 +12,7 @@ namespace DataCentre.Api.Entity.Models
     public class APILog
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         public string APIUrl { get; set; }
         public string Method { get; set; }
@@ -19,6 +20,7 @@ namespace DataCentre.Api.Entity.Models
         public string RequestJson { get; set; }
         public string ResponseJson { get; set; }
         public string ResponseCode { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedTime { get; set; }
     }
 }
