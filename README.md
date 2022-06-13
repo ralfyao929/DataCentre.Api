@@ -27,7 +27,7 @@
     - 在 **_DataCentre.Api.Contracts_** 專案下，建立I[ModelName]DataRepository介面，該介面必須實作IRepositoryBase<[ModelName]>：
     - ![2022-05-10_09-10-39](https://user-images.githubusercontent.com/70353579/167522794-ee3f5af5-409d-4481-9c00-152ef55abfaa.png)
 4. 建立Repository：
-    - 在 **_DataCentre.Api.Repository_** 專案下，建立[ModelName]Repository.cs，該類別必須繼承RepositoryBase<[ModelName]>、實作上面所建立的IRepositoryBase<[ModelName]>介面：
+    - 在 **_DataCentre.Api.Repository_** 專案下，建立[ModelName]Repository.cs，該類別必須繼承RepositoryBase<[ModelName]>、實作上面所建立的I<[ModelName]>Repository介面：
     - ![2022-05-10_09-13-22](https://user-images.githubusercontent.com/70353579/167523149-c38b5120-dcc3-4ab7-aace-8ffbb505057f.png)
     - 回到 **_DataCentre.Api.Contracts_** 專案，在IRepositoryWrapper介面內，增加一個上面所建立的I<[ModelName]>DataRepository成員：
     - ![2022-05-10_09-17-49](https://user-images.githubusercontent.com/70353579/167523672-309d3406-ecb7-40e5-b8c6-8221063d0a0f.png)
@@ -49,5 +49,7 @@
     - ![2022-06-07_09-18-51](https://user-images.githubusercontent.com/70353579/172275681-7f722fe4-e810-49b8-918d-74358ab34008.png)
 2. 如果不想套用以上的架構存取單個Table資料，想自行寫較複雜的SQL，亦可透過以下例子進行查詢：
     - ![2022-06-08_08-26-14](https://user-images.githubusercontent.com/70353579/172505945-6ca83448-029d-401a-82a9-9155d806f155.png)
-    
+3. 如果有新增修改刪除資料，最後一定要呼叫該Model的Repository的Save()：
+    - ![2022-06-13_11-43-06](https://user-images.githubusercontent.com/70353579/173275591-46175507-a2ae-4c18-8f3d-cf53517839ed.png)
+
 
