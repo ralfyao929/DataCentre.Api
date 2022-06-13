@@ -27,7 +27,7 @@
     - 在 **_DataCentre.Api.Contracts_** 專案下，建立I[ModelName]DataRepository介面，該介面必須實作IRepositoryBase<[ModelName]>：
     - ![2022-05-10_09-10-39](https://user-images.githubusercontent.com/70353579/167522794-ee3f5af5-409d-4481-9c00-152ef55abfaa.png)
 4. 建立Repository：
-    - 在 **_DataCentre.Api.Repository_** 專案下，建立[ModelName]Repository.cs，該類別必須繼承RepositoryBase<[ModelName]>、實作上面所建立的IRepositoryBase<[ModelName]>介面：
+    - 在 **_DataCentre.Api.Repository_** 專案下，建立[ModelName]Repository.cs，該類別必須繼承RepositoryBase<[ModelName]>、實作上面所建立的I<[ModelName]>Repository介面：
     - ![2022-05-10_09-13-22](https://user-images.githubusercontent.com/70353579/167523149-c38b5120-dcc3-4ab7-aace-8ffbb505057f.png)
     - 回到 **_DataCentre.Api.Contracts_** 專案，在IRepositoryWrapper介面內，增加一個上面所建立的I<[ModelName]>DataRepository成員：
     - ![2022-05-10_09-17-49](https://user-images.githubusercontent.com/70353579/167523672-309d3406-ecb7-40e5-b8c6-8221063d0a0f.png)
