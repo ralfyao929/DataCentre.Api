@@ -55,7 +55,7 @@ namespace DataCentre.Api.Repository.Wrapper
             }
         }
 
-        public IPrivilegeDataRepository PrivilegeDataRepository 
+        public IPrivilegeDataRepository PrivilegeData
         {
             get
             {

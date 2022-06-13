@@ -30,7 +30,7 @@ namespace DataCentre.Api.PreProcess
         {
             if (string.IsNullOrEmpty(actionContext.HttpContext.Request.Headers.Authorization))
             {
-                setErrorResponse(actionContext, "驗證錯誤");
+                setErrorResponse(actionContext, "9999", "驗證錯誤");
             }
             else
             {
@@ -42,23 +42,24 @@ namespace DataCentre.Api.PreProcess
                         JwsAlgorithm.HS256);
                     if(jwtObject.exp.CompareTo(DateTime.Now) < 0)
                     {
-                        setErrorResponse(actionContext, "憑證過期");
+                        setErrorResponse(actionContext, "1001", "憑證過期");
                         //return;
                     }
                 }
                 catch (Exception ex)
                 {
-                    setErrorResponse(actionContext, ex.Message);
+                    setErrorResponse(actionContext, "9999", "未知的錯誤");
                     //return;
                 }
             }
             base.OnActionExecuting(actionContext);
         }
 
-        private static void setErrorResponse(ActionExecutingContext actionContext, string message)
+        private static void setErrorResponse(ActionExecutingContext actionContext, string code, string message)
         {
-            actionContext.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = message;
-            actionContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            actionContext.HttpContext.Response.WriteAsync(Utility.Utility.GetFailJsonStr(code, message));
+            //actionContext.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = message;
+            //actionContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
         }
 
         //public Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)

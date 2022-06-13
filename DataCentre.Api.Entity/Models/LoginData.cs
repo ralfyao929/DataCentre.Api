@@ -12,10 +12,15 @@ namespace DataCentre.Api.Entity.Models
     public class LoginData
     {
         /// <summary>
+        /// 資料表PK
+        /// </summary>
+        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+        /// <summary>
         /// 使用者帳號
         /// </summary>
         [Required(ErrorMessage="User Name is required")]
-        [Key]
         [Column("l_username")]
         public string Username { get; set; }
         /// <summary>
