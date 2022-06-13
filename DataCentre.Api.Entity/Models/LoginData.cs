@@ -16,28 +16,28 @@ namespace DataCentre.Api.Entity.Models
         /// </summary>
         [Required(ErrorMessage="User Name is required")]
         [Key]
-        [Column("Username")]
+        [Column("l_username")]
         public string Username { get; set; }
         /// <summary>
         /// 使用者密碼
         /// </summary>
         [Required(ErrorMessage ="Password is required")]
-        [Column("Password")]
+        [Column("l_password")]
         public string Password { get; set; }
         /// <summary>
         /// 所屬的權限列表，對應到 UserPrivilege
         /// </summary>
-        [Column("PrivilegeGroup")]
+        [Column("l_privilege_group")]
         public string PrivilegeGroup { get; set; }
         /// <summary>
         /// 建立日期
         /// </summary>
-        [Column("CreateDate")]
+        [Column("l_create_date")]
         public DateTime? CreateDate { get; set; }
         /// <summary>
         /// 建立人員
         /// </summary>
-        [Column("CreateUser")]
+        [Column("l_create_user")]
         public string CreateUser { get; set; }
 
     }

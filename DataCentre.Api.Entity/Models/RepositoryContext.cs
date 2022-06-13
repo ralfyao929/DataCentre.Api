@@ -22,6 +22,7 @@ namespace DataCentre.Api.Entity.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<LoginData>().HasNoKey();
+            builder.Entity<Product.ProductReview>().Ignore("companyIdArr");
             builder.Entity<UserPrivilege>().HasKey(table => new { table.PrivilegeGroup, table.PrivilegeId });
             builder.Entity<PrivilegeData>().HasKey(table => new { table.Id });
             base.OnModelCreating(builder);

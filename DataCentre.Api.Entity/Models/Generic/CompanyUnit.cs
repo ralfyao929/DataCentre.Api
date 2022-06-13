@@ -6,33 +6,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCentre.Api.Entity.Models
+namespace DataCentre.Api.Entity.Models.Generic
 {
-    [Table("PrivilegeData")]
-    public class PrivilegeData
+    /// <summary>
+    /// 公司單位
+    /// </summary>
+    [Table("CompanyUnit")]
+    public class CompanyUnit
     {
         /// <summary>
-        /// 資料PK
+        /// 公司單位ID
         /// </summary>
         [Key]
+        [Column("cu_id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("p_id")]
-        public int Id { get; set; }
+        public int ID { get; set; }
+
         /// <summary>
-        /// 權限名稱
+        /// 名稱
         /// </summary>
-        [Column("p_privilege_name")]
-        public string PrivilegeName { get; set; }
+        [Column("cu_name")]
+        public string Name { get; set; }
         /// <summary>
-        /// 權限類型0:一般 1:報表 -1:超級管理者
+        /// 部門代號
         /// </summary>
-        [Column("p_privilege_type")]
-        public int PrivilegeType { get; set; }
+        [Column("cu_dept_id")]
+        public string DeptId { get; set; }
         /// <summary>
-        /// 建立時間
+        /// 建立日期時間
         /// </summary>
+        [Column("cu_created_time")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        [Column("p_create_time")]
         public DateTime CreatedTime { get; set; }
     }
 }
