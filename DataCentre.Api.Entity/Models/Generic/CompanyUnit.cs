@@ -19,7 +19,6 @@ namespace DataCentre.Api.Entity.Models.Generic
         /// </summary>
         [Key]
         [Column("cu_id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         /// <summary>

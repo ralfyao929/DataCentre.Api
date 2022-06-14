@@ -16,7 +16,6 @@ namespace DataCentre.Api.Entity.Models.Generic
         /// </summary>
         [Key]
         [Column("id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         /// <summary>
         /// 名稱

@@ -18,7 +18,6 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 資料PK
         /// </summary>
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("id")]
         public int id { get; set; }
         /// <summary>

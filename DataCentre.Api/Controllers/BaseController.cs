@@ -14,6 +14,10 @@ namespace DataCentre.Api.Controllers
             _logger = Logger;
             _repositoryWrapper = RepositoryWrapper;
         }
+        public IRepositoryWrapper GetRepositoryWrapper()
+        {
+            return _repositoryWrapper;
+        }
         //protected RepositoryContext GetRepositoryContext()
         //{
         //    return _repositoryWrapper.

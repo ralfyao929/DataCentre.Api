@@ -5,6 +5,10 @@ using System.Text;
 using System.Web.Http.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
+using DataCentre.Api.Entity.Models;
+using Microsoft.AspNetCore.Http.Extensions;
+using DataCentre.Api.Controllers;
 
 namespace DataCentre.Api.PreProcess
 {
@@ -45,6 +49,9 @@ namespace DataCentre.Api.PreProcess
                         setErrorResponse(actionContext, "1001", "憑證過期");
                         //return;
                     }
+                    jwtObject.PrivilegeList.ForEach(p => { 
+                        
+                    });
                 }
                 catch (Exception ex)
                 {
@@ -53,6 +60,26 @@ namespace DataCentre.Api.PreProcess
                 }
             }
             base.OnActionExecuting(actionContext);
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            ObjectResult? result = (ObjectResult?)context.Result;
+            if(result != null)
+            {
+                var jwtObject = Jose.JWT.Decode<JwtAuthObject>(
+                        context.HttpContext.Request.Headers.Authorization,
+                        Encoding.UTF8.GetBytes(Utility.Utility.key),
+                        JwsAlgorithm.HS256);
+                APILog log = new APILog();
+                log.APIUrl = UriHelper.GetDisplayUrl(context.HttpContext.Request);
+                log.Method = context.HttpContext.Request.Method;
+                log.RequestJson = String.Empty;
+                log.ResponseCode = context.HttpContext.Response.StatusCode.ToString();
+                log.ResponseJson = (result.Value != null ? result.Value.ToString() : String.Empty);
+                log.User = jwtObject.Id;
+                ((BaseController)context.Controller).GetRepositoryWrapper().APILog.Create(log);
+            }
         }
 
         private static void setErrorResponse(ActionExecutingContext actionContext, string code, string message)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace DataCentre.Api.Entity.Models.Customer
         /// 審核ID
         /// </summary>
         [Column("cr_id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
         public int Id { get; set; }
         /// <summary>
         /// 負責公司清單

@@ -15,6 +15,7 @@ namespace DataCentre.Api.Contracts
         IEnumerable<T> FindByCondition(string expression);
         IEnumerable<T> FindByCondition(object whereConditions);
         object Query(string SQL, object param);
+        int Execute(string SQL, object param);
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);

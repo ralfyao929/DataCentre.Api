@@ -20,16 +20,8 @@ namespace DataCentre.Api.Contracts
         public RepositoryBase(DapperContext repositoryContext)
         {
             RepositoryContext = repositoryContext;
-            //Dapper.SqlMapper.SetTypeMap(typeof(T), new TableAttributeTypeMapper<>)
-            //SqlMapper.TableNameMapper = type => {
-            //    return SqlMapper.DefaultTableNameMapper(type);
-            //};
-            //Dapper.SqlMapper.SetTypeMap(
-            //    typeof(T),
-            //    new ColumnAttributeTypeMapper<T>());
             conn = (MySqlConnection)RepositoryContext.CreateConnection();
             SimpleCRUD.SetDialect(SimpleCRUD.Dialect.MySQL);
-            //Dapper.My
         }
 
         public DapperContext GetRepositoryContext()
@@ -38,26 +30,17 @@ namespace DataCentre.Api.Contracts
         }
         public void Create(T entity)
         {
-            //using(IDbConnection conn = )
-            //{
             conn.Insert<T>(entity);
-            //}
-            //RepositoryContext.Add(entity);
         }
 
         public void Delete(T entity)
         {
-            //using (IDbConnection conn = RepositoryContext.CreateConnection())
-            //{
             conn.Delete(entity);
-            //}
-            //RepositoryContext.Remove(entity);
         }
 
         public IEnumerable<T> findAll()
         {
-            return conn.GetList<T>();//(IQueryable<T>)conn.Query<T>($"SELECT * FROM {typeof(T).GetProperty("")}");
-            //return conn.;//RepositoryContext.SelectAll();
+            return conn.GetList<T>();
         }
 
         public IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression)
@@ -85,6 +68,11 @@ namespace DataCentre.Api.Contracts
         public object Query(string SQL, object param)
         {
             return conn.Query(SQL, param);
+        }
+
+        public int Execute(string SQL, object param)
+        {
+            return conn.Execute(SQL, param);
         }
     }
 }

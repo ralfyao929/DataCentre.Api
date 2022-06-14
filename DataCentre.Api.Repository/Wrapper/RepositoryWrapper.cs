@@ -47,7 +47,7 @@ namespace DataCentre.Api.Repository.Wrapper
         {
             get
             {
-                if (_privilegeData == null)
+                if (_apiLog == null)
                 {
                     _apiLog = new APILogRepository(_repositoryContext);
                 }
