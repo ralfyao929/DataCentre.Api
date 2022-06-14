@@ -10,11 +10,14 @@ namespace DataCentre.Api.Contracts
 {
     public interface IRepositoryBase<T>
     {
-        IQueryable<T> findAll();
-        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        IEnumerable<T> findAll();
+        IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        IEnumerable<T> FindByCondition(string expression);
+        IEnumerable<T> FindByCondition(object whereConditions);
+        object Query(string SQL, object param);
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
-        RepositoryContext GetRepositoryContext();
+        DapperContext GetRepositoryContext();
     }
 }

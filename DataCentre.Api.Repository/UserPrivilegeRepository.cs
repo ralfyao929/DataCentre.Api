@@ -10,7 +10,7 @@ namespace DataCentre.Api.Repository
 {
     public class UserPrivilegeRepository : RepositoryBase<UserPrivilege>, IUserPrivilegeRepository
     {
-        public UserPrivilegeRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        public UserPrivilegeRepository(DapperContext repositoryContext) : base(repositoryContext)
         {
         }
     }

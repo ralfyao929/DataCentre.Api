@@ -10,7 +10,7 @@ namespace DataCentre.Api.Repository
 {
     public class LoginDataRepository : RepositoryBase<LoginData>, ILoginDataRepository
     {
-        public LoginDataRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        public LoginDataRepository(DapperContext repositoryContext) : base(repositoryContext)
         {
 
         }

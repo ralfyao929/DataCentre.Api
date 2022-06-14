@@ -21,24 +21,12 @@ namespace DataCentre.Api.Controllers
         {
             try
             {
-                RepositoryContext context = _repositoryWrapper.GetRepositoryContext();
-                var privList = context.Set<PrivilegeData>().GroupJoin(
-                                context.Set<UserPrivilege>(),
-                                    a => a.Id,
-                                    b => b.PrivilegeId,
-                                    (a, b) => new { a.Id, a.PrivilegeName, a.PrivilegeType, b }
-                                ).SelectMany(
-                                    x => x.b.DefaultIfEmpty(),
-                                    (s, t) => new {s.Id, s.PrivilegeName, s.PrivilegeType, t.PrivilegeGroup}
-                                ).GroupJoin(context.Set<LoginData>().Where(s => s.id == id),
-                                    a => a.PrivilegeGroup,
-                                    b => b.PrivilegeGroup,
-                                    (a, b) =>new {a.Id, a.PrivilegeName, a.PrivilegeType, b})
-                                .SelectMany(
-                                    x=> x.b.DefaultIfEmpty(),
-                                    (y, z) => new {id = y.Id, name = y.PrivilegeName, type = y.PrivilegeType, isHave = string.IsNullOrEmpty(z.PrivilegeGroup) ? false : true}
-                                );
-                return Utility.Utility.GetSuccessJsonStr("\"data\":"+JsonConvert.SerializeObject(privList.ToList()));
+                //return "";
+                DapperContext context = _repositoryWrapper.GetRepositoryContext();
+                var privList = _repositoryWrapper.PrivilegeData.Query(@"SELECT a.p_id id, a.p_privilege_name name, a.p_privilege_type type, case when c.id is null then false else true end isHave FROM PrivilegeData a
+                                                                        LEFT OUTER JOIN UserPrivileges b on a.p_id = b.PrivilegeId
+                                                                        LEFT OUTER JOIN LoginData c on b.PrivilegeGroup = c.l_privilege_group and c.id=@id", new { id = id });
+                return Utility.Utility.GetSuccessJsonStr("\"data\":" + JsonConvert.SerializeObject(privList));
             }
             catch (Exception ex)
             {

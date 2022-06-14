@@ -7,10 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper.SimpleCRUD" Version="2.3.0" />
+    <PackageReference Include="MySqlConnector" Version="2.1.10" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\DataCentre.Api.Repository\bin\Debug\net6.0\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.SimpleCRUD">
+      <HintPath>C:\Users\191101\.nuget\packages\dapper.simplecrud\2.3.0\lib\netstandard2.0\Dapper.SimpleCRUD.dll</HintPath>
+    </Reference>
     <Reference Include="DataCentre.Api.Entity">
       <HintPath>..\DataCentre.Api.Entity\bin\Debug\net6.0\DataCentre.Api.Entity.dll</HintPath>
     </Reference>

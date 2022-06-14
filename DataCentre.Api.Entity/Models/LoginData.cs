@@ -33,7 +33,7 @@ namespace DataCentre.Api.Entity.Models
         /// 所屬的權限列表，對應到 UserPrivilege
         /// </summary>
         [Column("l_privilege_group")]
-        public string PrivilegeGroup { get; set; }
+        public string PrivilegeGroup { get; set; } = "";
         /// <summary>
         /// 建立日期
         /// </summary>

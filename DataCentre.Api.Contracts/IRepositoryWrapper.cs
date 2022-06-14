@@ -13,7 +13,7 @@ namespace DataCentre.Api.Contracts
         IUserPrivilegeRepository UserPrivilege { get; }
         IAPILogRepository APILog { get; }
         IPrivilegeDataRepository PrivilegeData { get; }
-        RepositoryContext GetRepositoryContext();
+        DapperContext GetRepositoryContext();
         //RepositoryContext GetRe
         //TO-DO Add Data Repository here...
         void Save();

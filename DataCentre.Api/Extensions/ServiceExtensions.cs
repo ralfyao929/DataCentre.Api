@@ -38,8 +38,10 @@ namespace DataCentre.Api.Extensions
 
         public static void ConfigureMySqlContext(this IServiceCollection services, IConfiguration config)
         {
-            var connectionString = config.GetConnectionString("mysqlconnection");
-            services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion));
+            //services.AddSingleton<DapperContext>(o => o.);
+            //var connectionString = config.GetConnectionString("mysqlconnection");
+            services.AddScoped<DapperContext>();
+            //services.AddDbContext<RepositoryContext>(o => o.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion));
         }
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {

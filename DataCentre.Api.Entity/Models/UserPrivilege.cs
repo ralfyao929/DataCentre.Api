@@ -15,7 +15,7 @@ namespace DataCentre.Api.Entity.Models
         /// 所屬的權限
         /// </summary>
         [Column("PrivilegeGroup")]
-        public string PrivilegeGroup { get; set; }
+        public string PrivilegeGroup { get; set; } = "";
         /// <summary>
         /// 權限的ID
         /// </summary>

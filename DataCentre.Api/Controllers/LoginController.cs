@@ -22,7 +22,7 @@ namespace DataCentre.Api.Controllers
         public string Post(LoginData name)
         {
             _logger.LogInfo("login user name:"+name.Username+", password:"+name.Password);
-            List<LoginData> logins = _repositoryWrapper.LoginData.FindByCondition(l => l.Username == name.Username).ToList();
+            List<LoginData> logins = _repositoryWrapper.LoginData.FindByCondition(new { Username = name.Username, Password = name.Password }).ToList();
             // 直接從EF Set<T>()查資料，LINQ 做 JOIN.
             // JOIN欄位判斷 一定要 'equals'，不可以使用'=='.
             // 以下的LINQ等同於下列SQL:

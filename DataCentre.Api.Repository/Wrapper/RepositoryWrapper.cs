@@ -10,8 +10,8 @@ namespace DataCentre.Api.Repository.Wrapper
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private RepositoryContext _repositoryContext;
-        public RepositoryWrapper(RepositoryContext context)
+        private DapperContext _repositoryContext;
+        public RepositoryWrapper(DapperContext context)
         {
             _repositoryContext = context;
         }
@@ -67,13 +67,13 @@ namespace DataCentre.Api.Repository.Wrapper
             }
         }
 
-        public RepositoryContext GetRepositoryContext()
+        public DapperContext GetRepositoryContext()
         {
             return _repositoryContext;
         }
         public void Save()
         {
-            _repositoryContext.SaveChanges();
+            //_repositoryContext
         }
     }
 }

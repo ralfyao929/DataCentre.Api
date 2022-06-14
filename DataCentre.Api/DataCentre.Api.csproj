@@ -17,13 +17,18 @@
   <ItemGroup>
     <PackageReference Include="jose-jwt" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\DataCentre.Api.Repository\bin\Debug\net6.0\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.SimpleCRUD">
+      <HintPath>C:\Users\191101\.nuget\packages\dapper.simplecrud\2.3.0\lib\netstandard2.0\Dapper.SimpleCRUD.dll</HintPath>
+    </Reference>
     <Reference Include="DataCentre.Api.Contracts">
       <HintPath>..\DataCentre.Api.Repository\bin\Debug\net6.0\DataCentre.Api.Contracts.dll</HintPath>
     </Reference>
@@ -39,6 +44,10 @@
     <Reference Include="DataCentre.Api.Utility">
       <HintPath>..\DataCentre.Api.Utility\bin\Debug\net6.0\DataCentre.Api.Utility.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Module\NewFolder\" />
   </ItemGroup>
 
 </Project>

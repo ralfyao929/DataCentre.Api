@@ -24,7 +24,7 @@ namespace DataCentre.Api.Models.Authentication
             {
                 Id = User.Username,
                 exp = DateTime.Now.AddSeconds(exp),
-                PrivilegeList = (RepositoryWrapper.UserPrivilege.FindByCondition(u => u.PrivilegeGroup == User.PrivilegeGroup)).ToList()
+                PrivilegeList = RepositoryWrapper.UserPrivilege.FindByCondition(new { PrivilegeGroup = User.PrivilegeGroup }).ToList()
             };
             return new Token()
             {

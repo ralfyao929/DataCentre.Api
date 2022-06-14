@@ -31,10 +31,10 @@ namespace DataCentre.Api.Controllers
                             token,
                             Encoding.UTF8.GetBytes(Utility.Utility.key),
                             JwsAlgorithm.HS256);
-                RepositoryContext context = _repositoryWrapper.GetRepositoryContext();
+                DapperContext context = _repositoryWrapper.GetRepositoryContext();
                 // Get Privilege List.
                 var privList = from privilegeList in jwtObject.PrivilegeList
-                               join privilege in context.Set<PrivilegeData>() on privilegeList.PrivilegeId equals privilege.Id
+                               join privilege in _repositoryWrapper.PrivilegeData.findAll() on privilegeList.PrivilegeId equals privilege.Id
                                select new { privilege.Id, privilege.PrivilegeName, privilege.PrivilegeType };
                 // Get Notify Json List.
                 string notifyJson = "null";

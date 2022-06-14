@@ -10,7 +10,7 @@ namespace DataCentre.Api.Repository
 {
     public class APILogRepository : RepositoryBase<APILog>, IAPILogRepository
     {
-        public APILogRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        public APILogRepository(DapperContext repositoryContext) : base(repositoryContext)
         {
         }
     }
