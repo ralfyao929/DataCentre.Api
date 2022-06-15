@@ -29,6 +29,11 @@ namespace DataCentre.Api.Entity.Models
         [Column("p_privilege_type")]
         public int PrivilegeType { get; set; }
         /// <summary>
+        /// 權限網址，驗證是否有執行權限使用
+        /// </summary>
+        [Column("p_privilege_url")]
+        public string PrivilegeUrl { get; set; }
+        /// <summary>
         /// 建立時間
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

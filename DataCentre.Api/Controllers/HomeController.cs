@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.Extensions;
 using Newtonsoft.Json;
 using System.Text;
+using DataCentre.Api.Models;
+using DataCentre.Api.View;
 
 namespace DataCentre.Api.Controllers
 {
@@ -21,9 +23,10 @@ namespace DataCentre.Api.Controllers
             
         }
         [HttpGet]
-        public string Get()
+        public ApiResult<HomeView> Get()
         {
-            APILog log = new APILog();
+            //APILog log = new APILog();
+            ApiResult<HomeView> apiResult = new ApiResult<HomeView>();
             try
             {
                 string token = Request.Headers["Authorization"];
@@ -31,30 +34,21 @@ namespace DataCentre.Api.Controllers
                             token,
                             Encoding.UTF8.GetBytes(Utility.Utility.key),
                             JwsAlgorithm.HS256);
-                DapperContext context = _repositoryWrapper.GetRepositoryContext();
-                // Get Privilege List.
                 var privList = from privilegeList in jwtObject.PrivilegeList
                                join privilege in _repositoryWrapper.PrivilegeData.findAll() on privilegeList.PrivilegeId equals privilege.Id
                                select new { privilege.Id, privilege.PrivilegeName, privilege.PrivilegeType };
-                // Get Notify Json List.
-                string notifyJson = "null";
-                string responseJson = Utility.Utility.GetSuccessJsonStr("\"data\":" + JsonConvert.SerializeObject(privList.ToList()) + ",\"nofity\":" + notifyJson);
-                log.APIUrl = UriHelper.GetDisplayUrl(Request);
-                log.Method = "GET";
-                log.RequestJson = String.Empty;
-                log.ResponseCode = "200";
-                log.ResponseJson = responseJson;
-                log.User = jwtObject.Id;
-                //log.CreatedTime = DateTime.Now;
-                _repositoryWrapper.APILog.Create(log);
-                _repositoryWrapper.Save();
-                return responseJson;
+                HomeView HomeViews = new HomeView();
+                HomeViews.data = privList;
+                apiResult.Code = "0000";
+                apiResult.Result = HomeViews;
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex + ex.StackTrace);
-                return Utility.Utility.GetFailJsonStr("9999", "系統發生錯誤，請洽系統管理人員");
+                apiResult.Code = "9999";
+                apiResult.Message = "未知的錯誤，請洽系統管理人員";
             }
+            return apiResult;
         }
     }
 }

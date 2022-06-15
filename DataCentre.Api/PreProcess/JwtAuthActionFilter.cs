@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using DataCentre.Api.Entity.Models;
 using Microsoft.AspNetCore.Http.Extensions;
 using DataCentre.Api.Controllers;
+using DataCentre.Api.Contracts;
+using Newtonsoft.Json;
+using System.IO.Pipelines;
+using System.Text.Json;
 
 namespace DataCentre.Api.PreProcess
 {
@@ -32,9 +36,15 @@ namespace DataCentre.Api.PreProcess
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
+            if (actionContext.HttpContext.Request.Path == "/api/login" 
+             || actionContext.HttpContext.Request.Path == "/api/home/data")
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(actionContext.HttpContext.Request.Headers.Authorization))
             {
                 setErrorResponse(actionContext, "9999", "驗證錯誤");
+                return;
             }
             else
             {
@@ -44,18 +54,49 @@ namespace DataCentre.Api.PreProcess
                         actionContext.HttpContext.Request.Headers.Authorization,
                         Encoding.UTF8.GetBytes(Utility.Utility.key),
                         JwsAlgorithm.HS256);
-                    if(jwtObject.exp.CompareTo(DateTime.Now) < 0)
+                    if (jwtObject.exp.CompareTo(DateTime.Now) < 0)
                     {
                         setErrorResponse(actionContext, "1001", "憑證過期");
-                        //return;
+                        return;
                     }
-                    jwtObject.PrivilegeList.ForEach(p => { 
-                        
+                    IPrivilegeDataRepository privilegeData = ((BaseController)actionContext.Controller).GetRepositoryWrapper().PrivilegeData;
+                    bool hasPriv = false;
+                    jwtObject.PrivilegeList.ForEach(p =>
+                    {
+                        var dataPriv = privilegeData.FindByCondition(new { Id = p.PrivilegeId });
+                        PrivilegeData p1 = null;
+                        if (dataPriv.Count() > 0)
+                        {
+                            p1 = (PrivilegeData)dataPriv.ToArray()[0];
+                        }
+                        if (p1 != null)
+                        {
+                            string[] urlArr = actionContext.HttpContext.Request.Path.ToString().Split('/');
+                            urlArr.ToList().ForEach(u =>
+                            {
+                                if (u == p1.PrivilegeUrl)
+                                {
+                                    hasPriv = true;
+                                    return;
+                                }
+                            });
+                        }
+                        if (hasPriv)
+                        {
+                            return;
+                        }
                     });
+                    if (!hasPriv)
+                    {
+                        setErrorResponse(actionContext, "1003", "沒有權限取得相關資訊");
+                        return;
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
                     setErrorResponse(actionContext, "9999", "未知的錯誤");
+                    return;
                     //return;
                 }
             }
@@ -64,6 +105,10 @@ namespace DataCentre.Api.PreProcess
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
+            if (context.HttpContext.Request.Path == "/api/login")
+            {
+                return;
+            }
             ObjectResult? result = (ObjectResult?)context.Result;
             if(result != null)
             {
@@ -74,24 +119,23 @@ namespace DataCentre.Api.PreProcess
                 APILog log = new APILog();
                 log.APIUrl = UriHelper.GetDisplayUrl(context.HttpContext.Request);
                 log.Method = context.HttpContext.Request.Method;
-                log.RequestJson = String.Empty;
+                log.RequestJson = ((BaseController)context.Controller).RequestBody.ToString();//serJsonDetails.ToString();
                 log.ResponseCode = context.HttpContext.Response.StatusCode.ToString();
-                log.ResponseJson = (result.Value != null ? result.Value.ToString() : String.Empty);
+                log.ResponseJson = (result != null && result.Value != null ? JsonConvert.SerializeObject(result.Value) : String.Empty);
                 log.User = jwtObject.Id;
+                log.CreatedTime = DateTime.Now;
                 ((BaseController)context.Controller).GetRepositoryWrapper().APILog.Create(log);
             }
         }
 
         private static void setErrorResponse(ActionExecutingContext actionContext, string code, string message)
         {
-            actionContext.HttpContext.Response.WriteAsync(Utility.Utility.GetFailJsonStr(code, message));
-            //actionContext.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = message;
-            //actionContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            //UnauthorizedResult res = new UnauthorizedResult();
+            //res.StatusCode = (int)HttpStatusCode.Unauthorized;
+            if(code == "1003" || code == "1001")
+                actionContext.Result = new UnauthorizedObjectResult(Utility.Utility.GetFailJsonStr(code, message));
+            if (code == "9999")
+                actionContext.Result = new BadRequestObjectResult(Utility.Utility.GetFailJsonStr(code, message));
         }
-
-        //public Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation)
-        //{
-        //    //throw new NotImplementedException();
-        //}
     }
 }

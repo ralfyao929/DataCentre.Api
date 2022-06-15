@@ -3,6 +3,8 @@ using DataCentre.Api.Entity.Models;
 using DataCentre.Api.LoggerService;
 using DataCentre.Api.Models;
 using DataCentre.Api.Models.Authentication;
+using DataCentre.Api.PreProcess;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
@@ -12,16 +14,22 @@ namespace DataCentre.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(JwtAuthActionFilter))]
     public class LoginController : BaseController
     {
+        
         public LoginController(ILoggerManager logger, IRepositoryWrapper repositoryWrapper) : base(logger, repositoryWrapper)
         {
             
         }
         [HttpPost]
-        public string Post(LoginData name)
+        public ApiResult<LoginDataView> Post(LoginData name)
         {
+			ApiResult<LoginDataView> apiResult = new ApiResult<LoginDataView>();
             _logger.LogInfo("login user name:"+name.Username+", password:"+name.Password);
+            //this.Request
+            //this.Url
+            RequestBody = JsonConvert.SerializeObject(name);
             List<LoginData> logins = _repositoryWrapper.LoginData.FindByCondition(new { Username = name.Username, Password = name.Password }).ToList();
             // 直接從EF Set<T>()查資料，LINQ 做 JOIN.
             // JOIN欄位判斷 一定要 'equals'，不可以使用'=='.
@@ -46,9 +54,23 @@ namespace DataCentre.Api.Controllers
                 LoginDataView loginView = new LoginDataView();
                 loginView.loginData = (LoginData)logins.ToList()[0];
                 loginView.Token = GetToken(loginView.loginData, _repositoryWrapper);
-                return Utility.Utility.GetSuccessJsonStr("'data':"+JsonConvert.SerializeObject(loginView));
+                //string responseStr = Utility.Utility.GetSuccessJsonStr("'data':" + JsonConvert.SerializeObject(loginView));
+				apiResult.Code = "0000";
+                apiResult.Result = loginView;
+                APILog log = new APILog();
+                log.APIUrl = UriHelper.GetDisplayUrl(Request);
+                log.Method = Request.Method;
+                log.RequestJson = JsonConvert.SerializeObject(name);
+                log.ResponseCode = Response.StatusCode.ToString();
+                log.ResponseJson = JsonConvert.SerializeObject(apiResult);
+                log.User = name.Username;
+                log.CreatedTime = DateTime.Now;
+                _repositoryWrapper.APILog.Create(log);
+                ResponseBody = JsonConvert.SerializeObject(apiResult);
+                return apiResult;
             }
-            return Utility.Utility.GetFailJsonStr("1001", "帳號或密碼錯誤");
+            apiResult.Code = "1001";
+            return apiResult;
         }
         
         private Token GetToken(LoginData User, IRepositoryWrapper RepositoryWrapper)

@@ -9,6 +9,8 @@ namespace DataCentre.Api.Controllers
     {
         protected static ILoggerManager _logger;
         protected IRepositoryWrapper _repositoryWrapper;
+        public object RequestBody = string.Empty;
+        public object ResponseBody = string.Empty;
         public BaseController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper)
         {
             _logger = Logger;

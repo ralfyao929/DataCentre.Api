@@ -3,6 +3,7 @@ using DataCentre.Api.Entity.Models;
 using DataCentre.Api.LoggerService;
 using DataCentre.Api.PreProcess;
 using DataCentre.Api.Repository.Wrapper;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataCentre.Api.Extensions
@@ -25,6 +26,12 @@ namespace DataCentre.Api.Extensions
         {
             services.Configure<IISOptions>(options => { 
                 
+            });
+            services.Configure<IISServerOptions>(options => {
+                options.AllowSynchronousIO = true;
+            });
+            services.Configure<KestrelServerOptions>(options => {
+                options.AllowSynchronousIO = true;
             });
         }
         public static void ConfigureLoggerServices(this IServiceCollection services)

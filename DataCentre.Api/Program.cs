@@ -13,7 +13,6 @@ builder.Services.ConfigureRepositoryWrapper();
 builder.Services.ConfigureConstants(builder.Configuration);
 builder.Services.ConfigureFilterServices();
 builder.Services.AddControllers();
-
 var app = builder.Build();
 if(app.Environment.IsDevelopment())
 {
