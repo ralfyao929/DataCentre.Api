@@ -67,7 +67,7 @@ namespace DataCentre.Api.Controllers
                     _logger.LogInfo(delCmd);
                     cmd.Transaction = tran;
                     cmd.ExecuteNonQuery();
-                    _repositoryWrapper.UserPrivilege.Delete(new UserPrivilege() { PrivilegeGroup = Login.PrivilegeGroup }, tran);
+                    //_repositoryWrapper.UserPrivilege.Delete(new UserPrivilege() { PrivilegeGroup = Login.PrivilegeGroup }, tran);
                     foreach(int ids in data.idList)
                     {
                         cmd = conn.CreateCommand();
