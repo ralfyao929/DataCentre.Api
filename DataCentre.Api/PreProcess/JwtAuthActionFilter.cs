@@ -69,7 +69,7 @@ namespace DataCentre.Api.PreProcess
                         {
                             p1 = (PrivilegeData)dataPriv.ToArray()[0];
                         }
-                        if (p1 != null)
+                        if (p1 != null && !string.IsNullOrEmpty(p1.PrivilegeUrl))
                         {
                             string[] privUrl = p1.PrivilegeUrl.Split(',');
                             foreach (string privUrlElm in privUrl)

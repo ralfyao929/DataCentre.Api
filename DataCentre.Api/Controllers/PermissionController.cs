@@ -5,8 +5,10 @@ using DataCentre.Api.Models;
 using DataCentre.Api.PreProcess;
 using DataCentre.Api.View;
 using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
 using Newtonsoft.Json;
 using System.Data;
+using System.Data.Common;
 
 namespace DataCentre.Api.Controllers
 {
@@ -57,14 +59,27 @@ namespace DataCentre.Api.Controllers
                 if(LoginDatas.Count() > 0)
                 {
                     LoginData Login = LoginDatas.ToList()[0];
+                    IDbCommand cmd = conn.CreateCommand();
+                    string delCmd = "DELETE FROM UserPrivileges WHERE PrivilegeGroup=@PrivilegeGroup";
+                    cmd.CommandText = delCmd;
+                    cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
+                    delCmd += ",@PrivilegeGroup="+ Login.PrivilegeGroup;
+                    _logger.LogInfo(delCmd);
+                    cmd.Transaction = tran;
+                    cmd.ExecuteNonQuery();
                     _repositoryWrapper.UserPrivilege.Delete(new UserPrivilege() { PrivilegeGroup = Login.PrivilegeGroup }, tran);
                     foreach(int ids in data.idList)
                     {
-                        UserPrivilege Privilege = new UserPrivilege();
-                        Privilege.PrivilegeGroup = Login.PrivilegeGroup;
-                        Privilege.PrivilegeId = ids;
-                        Privilege.CreateDate = DateTime.Now;
-                        _repositoryWrapper.UserPrivilege.Create(Privilege, tran);
+                        cmd = conn.CreateCommand();
+                        delCmd = "INSERT INTO UserPrivileges (PrivilegeGroup, PrivilegeId) VALUES(@PrivilegeGroup, @PrivilegeId)";
+                        cmd.CommandText = delCmd;
+                        cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
+                        cmd.Parameters.Add(new MySqlParameter("@PrivilegeId", ids));
+                        delCmd += ",@PrivilegeGroup=" + Login.PrivilegeGroup;
+                        delCmd += ",@PrivilegeId=" + ids;
+                        _logger.LogInfo(delCmd);
+                        cmd.Transaction = tran;
+                        cmd.ExecuteNonQuery();
                     }
                     result.Code = "0000";
                 }

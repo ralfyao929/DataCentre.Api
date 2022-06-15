@@ -11,6 +11,9 @@ namespace DataCentre.Api.Entity.Models
     [Table("UserPrivileges")]
     public class UserPrivilege
     {
+        [Key]
+        [Column("id")]
+        public int id { get; set; }
         /// <summary>
         /// 權限的ID
         /// </summary>
