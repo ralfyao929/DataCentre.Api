@@ -45,16 +45,44 @@ namespace DataCentre.Api.Controllers
             }
         }
         [HttpPut]
-        public string Put(object data)
+        public ApiResult<ResultView> Put(PermissionView.PermissionData data)
         {
+            ApiResult<ResultView> result = new ApiResult<ResultView>();
+            IDbConnection conn = _repositoryWrapper.GetRepositoryContext().CreateConnection();
+            conn.Open();
+            IDbTransaction tran = conn.BeginTransaction();
             try
             {
-                return "";
+                var LoginDatas = _repositoryWrapper.LoginData.FindByCondition(new { id = data.id }, tran);
+                if(LoginDatas.Count() > 0)
+                {
+                    LoginData Login = LoginDatas.ToList()[0];
+                    _repositoryWrapper.UserPrivilege.Delete(new UserPrivilege() { PrivilegeGroup = Login.PrivilegeGroup }, tran);
+                    foreach(int ids in data.idList)
+                    {
+                        UserPrivilege Privilege = new UserPrivilege();
+                        Privilege.PrivilegeGroup = Login.PrivilegeGroup;
+                        Privilege.PrivilegeId = ids;
+                        Privilege.CreateDate = DateTime.Now;
+                        _repositoryWrapper.UserPrivilege.Create(Privilege, tran);
+                    }
+                    result.Code = "0000";
+                }
+                else
+                {
+                    result.Code = "9999";
+                    result.Message = "未知的錯誤，找不到帳號相關資訊";
+                }
+                tran.Commit();
+                return result;
             }
             catch (Exception ex)
             {
+                tran.Rollback();
                 _logger.LogError(ex + ex.StackTrace);
-                return Utility.Utility.GetFailJsonStr("9999", "系統發生錯誤，請洽系統管理人員");
+                result.Code = "9999";
+                result.Message = "未知的錯誤，請洽系統管理人員";
+                return result;
             }
         }
     }

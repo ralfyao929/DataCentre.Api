@@ -71,15 +71,15 @@ namespace DataCentre.Api.PreProcess
                         }
                         if (p1 != null)
                         {
-                            string[] urlArr = actionContext.HttpContext.Request.Path.ToString().Split('/');
-                            urlArr.ToList().ForEach(u =>
+                            string[] privUrl = p1.PrivilegeUrl.Split(',');
+                            foreach (string privUrlElm in privUrl)
                             {
-                                if (u == p1.PrivilegeUrl)
+                                if (actionContext.HttpContext.Request.Path == privUrlElm)
                                 {
                                     hasPriv = true;
-                                    return;
+                                    break;
                                 }
-                            });
+                            }
                         }
                         if (hasPriv)
                         {
