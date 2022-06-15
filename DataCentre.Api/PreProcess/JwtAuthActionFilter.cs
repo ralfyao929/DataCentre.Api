@@ -34,6 +34,7 @@ namespace DataCentre.Api.PreProcess
     //[Filter]
     public class JwtAuthActionFilter : ActionFilterAttribute
     {
+        public string RequestBody = string.Empty;
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
             if (actionContext.HttpContext.Request.Path == "/api/login" 
@@ -91,7 +92,7 @@ namespace DataCentre.Api.PreProcess
                         setErrorResponse(actionContext, "1003", "沒有權限取得相關資訊");
                         return;
                     }
-                    
+                    RequestBody = JsonConvert.SerializeObject(actionContext.ActionArguments);
                 }
                 catch (Exception ex)
                 {
@@ -119,7 +120,7 @@ namespace DataCentre.Api.PreProcess
                 APILog log = new APILog();
                 log.APIUrl = UriHelper.GetDisplayUrl(context.HttpContext.Request);
                 log.Method = context.HttpContext.Request.Method;
-                log.RequestJson = ((BaseController)context.Controller).RequestBody.ToString();//serJsonDetails.ToString();
+                log.RequestJson = RequestBody;//serJsonDetails.ToString();
                 log.ResponseCode = context.HttpContext.Response.StatusCode.ToString();
                 log.ResponseJson = (result != null && result.Value != null ? JsonConvert.SerializeObject(result.Value) : String.Empty);
                 log.User = jwtObject.Id;
