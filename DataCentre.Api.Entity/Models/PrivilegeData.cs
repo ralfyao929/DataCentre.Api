@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper;
 
 namespace DataCentre.Api.Entity.Models
 {
@@ -15,7 +9,6 @@ namespace DataCentre.Api.Entity.Models
         /// 資料PK
         /// </summary>
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("p_id")]
         public int Id { get; set; }
         /// <summary>
@@ -36,7 +29,6 @@ namespace DataCentre.Api.Entity.Models
         /// <summary>
         /// 建立時間
         /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Column("p_create_time")]
         public DateTime CreatedTime { get; set; }
     }

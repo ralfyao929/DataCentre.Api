@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dapper;
 
 namespace DataCentre.Api.Entity.Models.Generic
 {
@@ -35,7 +29,6 @@ namespace DataCentre.Api.Entity.Models.Generic
         /// 建立日期時間
         /// </summary>
         [Column("cu_created_time")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedTime { get; set; }
     }
 }

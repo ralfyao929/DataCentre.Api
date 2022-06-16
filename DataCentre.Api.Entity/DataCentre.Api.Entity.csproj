@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Supplier\" />
+    <Reference Include="Dapper.SimpleCRUD">
+      <HintPath>..\DataCentre.Api\Dapper.SimpleCRUD.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
