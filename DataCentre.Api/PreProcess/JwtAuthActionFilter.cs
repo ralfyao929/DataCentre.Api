@@ -131,8 +131,6 @@ namespace DataCentre.Api.PreProcess
 
         private static void setErrorResponse(ActionExecutingContext actionContext, string code, string message)
         {
-            //UnauthorizedResult res = new UnauthorizedResult();
-            //res.StatusCode = (int)HttpStatusCode.Unauthorized;
             if(code == "1003" || code == "1001")
                 actionContext.Result = new UnauthorizedObjectResult(Utility.Utility.GetFailJsonStr(code, message));
             if (code == "9999")

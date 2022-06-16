@@ -1,10 +1,12 @@
 ﻿using DataCentre.Api.Contracts;
 using DataCentre.Api.Entity.Models;
 using DataCentre.Api.LoggerService;
+using DataCentre.Api.Localize;
 using DataCentre.Api.Models;
 using DataCentre.Api.PreProcess;
 using DataCentre.Api.View;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System.Data;
@@ -17,14 +19,14 @@ namespace DataCentre.Api.Controllers
     [ServiceFilter(typeof(JwtAuthActionFilter))]
     public class PermissionController : BaseController
     {
-        public PermissionController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper) : base(Logger, RepositoryWrapper)
+        public PermissionController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper, IConfiguration iConfig) : base(Logger, RepositoryWrapper, iConfig)
         {
 
         }
         [HttpGet]
         public ApiResult<ResultView> Get(int id)
         {
-            ApiResult<ResultView> apiResult = new ApiResult<ResultView>();
+            ApiResult<ResultView> apiResult = new ApiResult<ResultView>(_localizer.GetValue<string>("AppSettings:localize"));
             try
             {
                 ResultView view = new ResultView();
@@ -63,11 +65,10 @@ namespace DataCentre.Api.Controllers
                     string delCmd = "DELETE FROM UserPrivileges WHERE PrivilegeGroup=@PrivilegeGroup";
                     cmd.CommandText = delCmd;
                     cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
-                    delCmd += ",@PrivilegeGroup="+ Login.PrivilegeGroup;
+                    delCmd += ", @PrivilegeGroup="+ Login.PrivilegeGroup;
                     _logger.LogInfo(delCmd);
                     cmd.Transaction = tran;
                     cmd.ExecuteNonQuery();
-                    //_repositoryWrapper.UserPrivilege.Delete(new UserPrivilege() { PrivilegeGroup = Login.PrivilegeGroup }, tran);
                     foreach(int ids in data.idList)
                     {
                         cmd = conn.CreateCommand();
@@ -75,8 +76,8 @@ namespace DataCentre.Api.Controllers
                         cmd.CommandText = delCmd;
                         cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
                         cmd.Parameters.Add(new MySqlParameter("@PrivilegeId", ids));
-                        delCmd += ",@PrivilegeGroup=" + Login.PrivilegeGroup;
-                        delCmd += ",@PrivilegeId=" + ids;
+                        delCmd += ", @PrivilegeGroup=" + Login.PrivilegeGroup;
+                        delCmd += ", @PrivilegeId=" + ids;
                         _logger.LogInfo(delCmd);
                         cmd.Transaction = tran;
                         cmd.ExecuteNonQuery();

@@ -1,6 +1,7 @@
 ﻿using DataCentre.Api.Contracts;
 using DataCentre.Api.Entity.Models;
 using DataCentre.Api.LoggerService;
+using DataCentre.Api.Localize;
 using DataCentre.Api.Models.Authentication;
 using DataCentre.Api.PreProcess;
 using Jose;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 using System.Text;
 using DataCentre.Api.Models;
 using DataCentre.Api.View;
+using Microsoft.Extensions.Localization;
 
 namespace DataCentre.Api.Controllers
 {
@@ -18,7 +20,8 @@ namespace DataCentre.Api.Controllers
     [Route("api/[controller]/data")]
     public class HomeController : BaseController
     {
-        public HomeController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper) : base(Logger, RepositoryWrapper)
+        
+        public HomeController(ILoggerManager Logger, IRepositoryWrapper RepositoryWrapper, IConfiguration iConfig) : base(Logger, RepositoryWrapper, iConfig)
         {
             
         }
@@ -26,7 +29,7 @@ namespace DataCentre.Api.Controllers
         public ApiResult<HomeView> Get()
         {
             //APILog log = new APILog();
-            ApiResult<HomeView> apiResult = new ApiResult<HomeView>();
+            ApiResult<HomeView> apiResult = new ApiResult<HomeView>(_localizer.GetValue<string>("AppSettings:localize"));
             try
             {
                 string token = Request.Headers["Authorization"];
