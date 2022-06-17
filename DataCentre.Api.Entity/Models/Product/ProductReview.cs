@@ -89,6 +89,11 @@ namespace DataCentre.Api.Entity.Models.Product
         [Column("p_create_date")]
         public DateTime createdTime { get; set; }
         /// <summary>
+        /// 審核狀態
+        /// </summary>
+        [Column("p_review_status")]
+        public int reviewStatus { get; set; }
+        /// <summary>
         /// 審核人員
         /// </summary>
         [Column("p_reviewer")]

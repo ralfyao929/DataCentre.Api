@@ -13,6 +13,10 @@ namespace DataCentre.Api.Contracts
         IUserPrivilegeRepository UserPrivilege { get; }
         IAPILogRepository APILog { get; }
         IPrivilegeDataRepository PrivilegeData { get; }
+        ICustomerReviewDataRepository CustomerReviewData { get; }
+        IProductReviewDataRepository ProductReviewData { get; }
+        ISupplierReviewDataRepository SupplierReviewData { get; }
+        ICloudAccountManageDataRepository CloudAccountManageReviewData { get; }
         DapperContext GetRepositoryContext();
         //RepositoryContext GetRe
         //TO-DO Add Data Repository here...

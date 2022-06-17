@@ -5,6 +5,6 @@ namespace DataCentre.Api.View
 {
     public class HomeView : ResultView
     {
-        public object notify { get; set; }
+        public List<Notification> notify { get; set; }
     }
 }

@@ -19,6 +19,10 @@ namespace DataCentre.Api.Repository.Wrapper
         private IUserPrivilegeRepository _userPrivilege;
         private IAPILogRepository _apiLog;
         private IPrivilegeDataRepository _privilegeData;
+        private ICustomerReviewDataRepository _customerReviewData;
+        private IProductReviewDataRepository _productReviewData;
+        private ISupplierReviewDataRepository _supplierReviewData;
+        private ICloudAccountManageDataRepository _cloudAccountManageData;
 
         public ILoginDataRepository LoginData
         {
@@ -64,6 +68,53 @@ namespace DataCentre.Api.Repository.Wrapper
                     _privilegeData = new PrivilegeDataRepository(_repositoryContext);
                 }
                 return _privilegeData;
+            }
+        }
+
+        public ICustomerReviewDataRepository CustomerReviewData
+        {   
+            get 
+            {
+                if (_customerReviewData == null)
+                {
+                    _customerReviewData = new CustomerReviewRepository(_repositoryContext);
+                }
+                return _customerReviewData;
+            } 
+        }
+
+        public IProductReviewDataRepository ProductReviewData
+        {
+            get
+            {
+                if (_productReviewData == null)
+                {
+                    _productReviewData = new ProductReviewRepository(_repositoryContext);
+                }
+                return _productReviewData;
+            }
+        }
+        public ISupplierReviewDataRepository SupplierReviewData 
+        { 
+            get 
+            {
+                if (_supplierReviewData == null)
+                {
+                    _supplierReviewData = new SupplierReviewDataRepository(_repositoryContext);
+                }
+                return _supplierReviewData;
+            } 
+        }
+
+        public ICloudAccountManageDataRepository CloudAccountManageReviewData
+        {
+            get
+            {
+                if (_cloudAccountManageData == null)
+                {
+                    _cloudAccountManageData = new CloudAccountManageReviewDataRepository(_repositoryContext);
+                }
+                return _cloudAccountManageData;
             }
         }
 
