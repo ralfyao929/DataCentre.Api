@@ -21,8 +21,6 @@
     - ![2022-06-08_11-50-21](https://user-images.githubusercontent.com/70353579/172527746-fc9ca953-b59e-4463-be51-15f3ee73feaa.png)
     - Model新增的Class所加上得[Table()]與[Column()]的tag，可以對應到資料庫真正的Table與Column，即便類別的成員與資料庫實際名稱不相符
     - ![2022-06-10_15-49-40](https://user-images.githubusercontent.com/70353579/173017580-c856c359-16b7-459c-9e43-481726e79f88.png)
-    - 在 **_DataCentre.Api.Entity_** 專案下 ，找出RepositoryContext類別，並在該類別程式碼內加上上面所建類別的DbSet物件：
-    - ![2022-05-10_08-57-32](https://user-images.githubusercontent.com/70353579/167521856-85f9f9fb-7461-4df1-b3e8-0ba5ecff0d38.png)
 2. 建立Contract：
     - 在 **_DataCentre.Api.Contracts_** 專案下，建立I[ModelName]DataRepository介面，該介面必須實作IRepositoryBase<[ModelName]>：
     - ![2022-05-10_09-10-39](https://user-images.githubusercontent.com/70353579/167522794-ee3f5af5-409d-4481-9c00-152ef55abfaa.png)
