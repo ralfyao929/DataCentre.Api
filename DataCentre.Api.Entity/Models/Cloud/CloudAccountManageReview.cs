@@ -104,7 +104,7 @@ namespace DataCentre.Api.Entity.Models.Cloud
         [IgnoreInsert]
         [IgnoreSelect]
         [IgnoreUpdate]
-        public List<CloudAccountReview> CloudAccountReview { get; set; }
+        public List<CloudAccountReview>? CloudAccountReviews { get; set; }
     }
     /// <summary>
     /// 雲端帳號審核
@@ -118,6 +118,11 @@ namespace DataCentre.Api.Entity.Models.Cloud
         [Column("id")]
         public int id { get; set; }
         /// <summary>
+        /// 雲端帳號管理維護審核ID
+        /// </summary>
+        [Column("camr_car_id")]
+        public int CloudAccountManageReviewId { get; set; }
+        /// <summary>
         /// 原雲端帳號id
         /// </summary>
         [Column("car_original_account_id")]
@@ -127,16 +132,6 @@ namespace DataCentre.Api.Entity.Models.Cloud
         /// </summary>
         [Column("car_currency_id")]
         public int CurrencyId { get; set; }
-        /// <summary>
-        /// 計費項目
-        /// </summary>
-        [Column("car_charge_item")]
-        public string ChargeItem { get; set; }
-        /// <summary>
-        /// 服務項目
-        /// </summary>
-        [Column("car_service_item")]
-        public string ServiceItem { get; set; }
         /// <summary>
         /// 帳號
         /// </summary>
@@ -153,30 +148,11 @@ namespace DataCentre.Api.Entity.Models.Cloud
         [Column("car_account_credit")]
         public decimal AccountCredit { get; set; }
         /// <summary>
-        /// 滿額優惠值
-        /// </summary>
-        [Column("car_full_premium")]
-        public decimal FullPremium { get; set; }
-        /// <summary>
         /// 測試到期日
         /// </summary>
         [Column("car_test_due_date")]
         public DateTime? TestDueDate { get; set; }
-        /// <summary>
-        /// 服務費趴數
-        /// </summary>
-        [Column("car_servicefee_discount_percent")]
-        public decimal ServiceFeeDiscountPercent { get; set; }
-        /// <summary>
-        /// 折扣趴數
-        /// </summary>
-        [Column("car_discount_percent")]
-        public decimal DiscountPercent { get; set; }
-        /// <summary>
-        /// 折扣金額
-        /// </summary>
-        [Column("car_discount_price")]
-        public decimal DiscountPrice { get; set; }
+        
         /// <summary>
         /// 移轉其他客戶ID
         /// </summary>
@@ -203,14 +179,66 @@ namespace DataCentre.Api.Entity.Models.Cloud
         [Column("car_active_date")]
         public DateTime? ActiveDate { get; set; }
         /// <summary>
-        /// 是否為代金劵
-        /// </summary>
-        [Column("car_is_coupon")]
-        public int IsCoupon { get; set; }
-        /// <summary>
         /// 雲端帳號管理ID
         /// </summary>
         [Column("car_cloud_account_manage_id")]
         public int CloudAccountManageId { get; set; }
+        [IgnoreInsert]
+        [IgnoreSelect]
+        [IgnoreUpdate]
+        public List<CloudAccountServiceItemReview>? CloudAccountServiceItemReviews { get; set; }
+    }
+    /// <summary>
+    /// 雲端帳號服務項目審核
+    /// </summary>
+    [Table("CloudAccountServiceItemReview")]
+    public class CloudAccountServiceItemReview 
+    {
+        /// <summary>
+        /// 雲端帳號服務項目審核ID
+        /// </summary>
+        [Column("id")]
+        public int id { get; set; }
+        /// <summary>
+        /// 雲端帳號審核ID
+        /// </summary>
+        [Column("car_casi_id")]
+        public int CloudAccountReviewId { get; set; }
+
+        /// <summary>
+        /// 服務項目
+        /// </summary>
+        [Column("car_service_item")]
+        public string? ServiceItem { get; set; }
+        /// <summary>
+        /// 計費項目
+        /// </summary>
+        [Column("car_charge_item")]
+        public string? ChargeItem { get; set; }
+        /// <summary>
+        /// 滿額優惠值
+        /// </summary>
+        [Column("car_full_premium")]
+        public decimal FullPremium { get; set; }
+        /// <summary>
+        /// 折扣趴數
+        /// </summary>
+        [Column("car_discount_percent")]
+        public decimal DiscountPercent { get; set; }
+        /// <summary>
+        /// 折扣金額
+        /// </summary>
+        [Column("car_discount_price")]
+        public decimal DiscountPrice { get; set; }
+        /// <summary>
+        /// 服務費趴數
+        /// </summary>
+        [Column("car_servicefee_discount_percent")]
+        public decimal ServiceFeeDiscountPercent { get; set; }
+        /// <summary>
+        /// 是否為代金劵
+        /// </summary>
+        [Column("car_is_coupon")]
+        public int IsCoupon { get; set; }
     }
 }

@@ -53,11 +53,11 @@ namespace DataCentre.Api.Controllers
                 Notification prodNotify = new Notification();
                 prodNotify.id = 2;
                 prodNotify.count = prodReviewList.Count();
-                // 供應商維護(檢核)->請求異動供應商資料<-取有幾筆要審核
+                // 客戶維護(檢核)->請求異動客戶資料<-取有幾筆要審核
                 Notification custNotify = new Notification();
                 custNotify.id = 1;
                 custNotify.count = custReviewList.Count();
-                // 客戶維護(檢核)->請求異動客戶資料<-取有幾筆要審核
+                // 供應商維護(檢核)->請求異動供應商資料<-取有幾筆要審核
                 Notification suppNotify = new Notification();
                 suppNotify.id = 0;
                 suppNotify.count = suppReviewList.Count();

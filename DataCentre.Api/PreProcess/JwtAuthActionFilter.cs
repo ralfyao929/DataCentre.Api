@@ -75,7 +75,7 @@ namespace DataCentre.Api.PreProcess
                             string[] privUrl = p1.PrivilegeUrl.Split(',');
                             foreach (string privUrlElm in privUrl)
                             {
-                                if (actionContext.HttpContext.Request.Path == privUrlElm)
+                                if (actionContext.HttpContext.Request.Path.ToString().IndexOf(privUrlElm) != -1)
                                 {
                                     hasPriv = true;
                                     break;
