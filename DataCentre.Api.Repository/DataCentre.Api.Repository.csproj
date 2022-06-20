@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataCentre.Api.Contracts\DataCentre.Api.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="DataCentre.Api.Contracts">
       <HintPath>..\DataCentre.Api.Contracts\bin\Debug\net6.0\DataCentre.Api.Contracts.dll</HintPath>
     </Reference>

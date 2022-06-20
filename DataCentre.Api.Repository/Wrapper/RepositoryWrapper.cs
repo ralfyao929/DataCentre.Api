@@ -1,5 +1,7 @@
 ﻿using DataCentre.Api.Contracts;
+using DataCentre.Api.Contracts.Product;
 using DataCentre.Api.Entity.Models;
+using DataCentre.Api.Repository.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,8 @@ namespace DataCentre.Api.Repository.Wrapper
         private IProductReviewDataRepository _productReviewData;
         private ISupplierReviewDataRepository _supplierReviewData;
         private ICloudAccountManageDataRepository _cloudAccountManageData;
+        private IProductTypeDataRepository _productTypeDataRepository;
+        private IProductClassDataRepository _productClassDataRepository;
 
         public ILoginDataRepository LoginData
         {
@@ -117,7 +121,28 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _cloudAccountManageData;
             }
         }
-
+        public IProductTypeDataRepository ProductTypeData
+        {
+            get
+            {
+                if (_productTypeDataRepository == null)
+                {
+                    _productTypeDataRepository = new ProductTypeDataRepository(_repositoryContext);
+                }
+                return _productTypeDataRepository;
+            }
+        }
+        public IProductClassDataRepository ProductClassData
+        {
+            get
+            {
+                if (_productClassDataRepository == null)
+                {
+                    _productClassDataRepository = new ProductClassDataRepository(_repositoryContext);
+                }
+                return _productClassDataRepository;
+            }
+        }
         public DapperContext GetRepositoryContext()
         {
             return _repositoryContext;

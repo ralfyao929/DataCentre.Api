@@ -1,4 +1,5 @@
-﻿using DataCentre.Api.Entity.Models;
+﻿using DataCentre.Api.Contracts.Product;
+using DataCentre.Api.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace DataCentre.Api.Contracts
         IProductReviewDataRepository ProductReviewData { get; }
         ISupplierReviewDataRepository SupplierReviewData { get; }
         ICloudAccountManageDataRepository CloudAccountManageReviewData { get; }
+        IProductTypeDataRepository ProductTypeData { get; }
+        IProductClassDataRepository ProductClassData { get; }
         DapperContext GetRepositoryContext();
         //RepositoryContext GetRe
         //TO-DO Add Data Repository here...
