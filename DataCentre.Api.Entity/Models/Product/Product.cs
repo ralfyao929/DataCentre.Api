@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DataCentre.Api.Entity.Models.Accounting;
 
 namespace DataCentre.Api.Entity.Models.Product
 {
@@ -15,6 +16,11 @@ namespace DataCentre.Api.Entity.Models.Product
         [Column("id")]
         public int id { get; set; }
         /// <summary>
+        /// 產品ID
+        /// </summary>
+        [Column("p_id")]
+        public int ProductId { get; set; }
+        /// <summary>
         /// 產品別ID
         /// </summary>
         [Column("p_product_type_id")]
@@ -23,12 +29,12 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 產品細項總稱
         /// </summary>
         [Column("p_product_general_name")]
-        public string productName1 { get; set; }
+        public string? productName1 { get; set; }
         /// <summary>
         /// 產品細項
         /// </summary>
         [Column("p_product_detail_name")]
-        public string productName2 { get; set; }
+        public string? productName2 { get; set; }
         /// <summary>
         /// 產品類ID
         /// </summary>
@@ -52,8 +58,8 @@ namespace DataCentre.Api.Entity.Models.Product
         /// <summary>
         /// 負責單位
         /// </summary>
-        [Column("p_responser_dept")]
-        public string departmentId { get; set; }
+        [Column("p_responser_dept_id")]
+        public int departmentId { get; set; }
         /// <summary>
         /// 是否列入成本
         /// </summary>
@@ -62,17 +68,17 @@ namespace DataCentre.Api.Entity.Models.Product
         /// <summary>
         /// 會計科目id
         /// </summary>
-        [Column("p_account")]
+        [Column("p_account_id")]
         public int accounting { get; set; }
         /// <summary>
         /// 會計子科目id
         /// </summary>
-        [Column("p_account_sub")]
+        [Column("p_account_sub_id")]
         public int accountingBranch { get; set; }
         /// <summary>
         /// 會計產品別id
         /// </summary>
-        [Column("p_account_prod")]
+        [Column("p_account_prod_id")]
         public int accountingProductType { get; set; }
         /// <summary>
         /// 建立者
@@ -83,7 +89,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 建立時間
         /// </summary>
         [Column("p_created_time")]
-        public DateTime createdTime { get; set; }
+        public DateTime? createdTime { get; set; }
         /// <summary>
         /// 修改人員
         /// </summary>
@@ -93,7 +99,6 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 修改時間
         /// </summary>
         [Column("p_modify_time")]
-        public DateTime modifyTime { get; set; }
-
+        public DateTime? modifyTime { get; set; }
     }
 }

@@ -8,10 +8,12 @@ namespace DataCentre.Api.Entity.Models.Generic
     [Table("CompanyUnit")]
     public class CompanyUnit
     {
+        [Key]
+        [Column("id")]
+        public int id { get; set; }
         /// <summary>
         /// 公司單位ID
         /// </summary>
-        [Key]
         [Column("cu_id")]
         public int ID { get; set; }
 
@@ -21,14 +23,9 @@ namespace DataCentre.Api.Entity.Models.Generic
         [Column("cu_name")]
         public string Name { get; set; }
         /// <summary>
-        /// 部門代號
-        /// </summary>
-        [Column("cu_dept_id")]
-        public string DeptId { get; set; }
-        /// <summary>
         /// 建立日期時間
         /// </summary>
-        [Column("cu_created_time")]
+        [Column("cu_create_time")]
         public DateTime CreatedTime { get; set; }
     }
 }

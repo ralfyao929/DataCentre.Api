@@ -1,6 +1,10 @@
 ﻿using DataCentre.Api.Contracts;
+using DataCentre.Api.Contracts.Accounting;
+using DataCentre.Api.Contracts.Company;
 using DataCentre.Api.Contracts.Product;
 using DataCentre.Api.Entity.Models;
+using DataCentre.Api.Repository.Accounting;
+using DataCentre.Api.Repository.Company;
 using DataCentre.Api.Repository.Product;
 using System;
 using System.Collections.Generic;
@@ -17,6 +21,7 @@ namespace DataCentre.Api.Repository.Wrapper
         {
             _repositoryContext = context;
         }
+        // Declaration
         private ILoginDataRepository _login;
         private IUserPrivilegeRepository _userPrivilege;
         private IAPILogRepository _apiLog;
@@ -27,7 +32,13 @@ namespace DataCentre.Api.Repository.Wrapper
         private ICloudAccountManageDataRepository _cloudAccountManageData;
         private IProductTypeDataRepository _productTypeDataRepository;
         private IProductClassDataRepository _productClassDataRepository;
-
+        private ICompanyDataRepository _companyDataRepository;
+        private ICompanyUnitDataRepository _companyUnitDataRepository;
+        private IAccountingItemDataRepository _accountingItemDataRepository;
+        private IAccountingSubItemDataRepository _accountingSubItemDataRepository;
+        private IAccountingProdTypeDataRepository _accountProdTypeData;
+        private IProductDataRepository _productData;
+        // Implementation
         public ILoginDataRepository LoginData
         {
             get
@@ -50,7 +61,6 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _userPrivilege;
             }
         }
-
         public IAPILogRepository APILog
         {
             get
@@ -62,7 +72,6 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _apiLog;
             }
         }
-
         public IPrivilegeDataRepository PrivilegeData
         {
             get
@@ -74,7 +83,6 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _privilegeData;
             }
         }
-
         public ICustomerReviewDataRepository CustomerReviewData
         {   
             get 
@@ -86,7 +94,6 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _customerReviewData;
             } 
         }
-
         public IProductReviewDataRepository ProductReviewData
         {
             get
@@ -109,7 +116,6 @@ namespace DataCentre.Api.Repository.Wrapper
                 return _supplierReviewData;
             } 
         }
-
         public ICloudAccountManageDataRepository CloudAccountManageReviewData
         {
             get
@@ -141,6 +147,71 @@ namespace DataCentre.Api.Repository.Wrapper
                     _productClassDataRepository = new ProductClassDataRepository(_repositoryContext);
                 }
                 return _productClassDataRepository;
+            }
+        }
+        public ICompanyDataRepository CompanyData 
+        { 
+            get 
+            {
+                if (_companyDataRepository == null)
+                {
+                    _companyDataRepository = new CompanyDataRepository(_repositoryContext);
+                }
+                return _companyDataRepository;
+            } 
+        }
+        public ICompanyUnitDataRepository CompanyUnitData
+        {
+            get
+            {
+                if (_companyUnitDataRepository == null)
+                {
+                    _companyUnitDataRepository = new CompanyUnitDataRepository(_repositoryContext);
+                }
+                return _companyUnitDataRepository;
+            }
+        }
+        public IAccountingItemDataRepository AccountItemData 
+        {
+            get
+            {
+                if (_accountingItemDataRepository == null)
+                {
+                    _accountingItemDataRepository = new AccountingItemDataRepository(_repositoryContext);
+                }
+                return _accountingItemDataRepository;
+            }
+        }
+        public IAccountingSubItemDataRepository AccountSubItemData 
+        {
+            get
+            {
+                if (_accountingSubItemDataRepository == null)
+                {
+                    _accountingSubItemDataRepository = new AccountingSubItemDataRepository(_repositoryContext);
+                }
+                return _accountingSubItemDataRepository;
+            }
+        }
+        public IAccountingProdTypeDataRepository AccountProdTypeData 
+        {
+            get
+            {
+                if (_accountProdTypeData == null)
+                {
+                    _accountProdTypeData = new AccountingProductTypeDataRepository(_repositoryContext);
+                }
+                return _accountProdTypeData;
+            }
+        }
+        public IProductDataRepository ProductData {
+            get
+            {
+                if (_productData == null)
+                {
+                    _productData = new ProductDataRepository(_repositoryContext);
+                }
+                return _productData;
             }
         }
         public DapperContext GetRepositoryContext()

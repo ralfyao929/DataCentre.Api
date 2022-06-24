@@ -1,12 +1,18 @@
 ﻿0000,Success.
 1001,Invalid Token Or Token Expired.
 1003,No Privilege
+1004,You Have No Privilege To Apply Add/Delete/Modify Related Information.
 1011,No Privilege To Set Monthly Settlement Related Function
 1012,No Privilege To Process Monthly Settlement 2 And Monthly Settlement Lockup.
 1013,No Privilege To Process Monthly Settlement Related Settlement, Therefore Cannot Delete Products In Order.
+2001,Required Information Not Input.
+2005,Duplicated Product Detail Name.
 2010,Cannot Process Monthly Settlement Lockup For This Company, Probably Current Monthly Settlement Stauts Is Not Monthly Settlement 2 Confirm.
 2011,Cannot Process Monthly Settlement 2 Confirm For This Company, Probably Current Monthly Settlement Stauts Is Not Monthly Settlement 1 Confirm.
 3009,Save Monthly Settlement Data Fail, Because You Modified Options That Are Forbidden To Modify.
+3013,There Is Not Specified Supplier Name To Each Company When Adding Product.
 3011,The Products Of This Order Cannot Be Deleted Because The Order Has Been Locked For Monthly Balance, Or The Invoice Status Is Not Open, Managed, Void and Reopen
+4002,AD cannot find the corresponding user, it may be that the name you entered is wrong, please use the menu to select the person in charge
+4030,The original product detail item to be modified/deleted does not exist
 4017,Cannot Find Order ID.
 9999,Unknown Error.

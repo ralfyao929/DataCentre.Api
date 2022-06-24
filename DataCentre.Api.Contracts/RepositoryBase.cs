@@ -60,7 +60,7 @@ namespace DataCentre.Api.Contracts
                 return ((IQueryable<T>)result1).Where(expression);
             }
             var result = from l in conn.GetList<T>() select l;
-            return ((IQueryable<T>)result).Where(expression);
+            return result;
         }
 
         public IEnumerable<T> FindByCondition(string expression, IDbTransaction transaction = null)

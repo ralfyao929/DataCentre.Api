@@ -37,7 +37,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// <summary>
         /// 隸屬公司ID Array，建立多筆審核資料使用，不Mapping到DB
         /// </summary>
-        public List<int> companyIdArr { get; set; }
+        public string companyIdArr { get; set; }
         /// <summary>
         /// 隸屬公司ID
         /// </summary>
@@ -93,6 +93,16 @@ namespace DataCentre.Api.Entity.Models.Product
         /// </summary>
         [Column("p_review_status")]
         public int reviewStatus { get; set; }
+        /// <summary>
+        /// 請求類型
+        /// </summary>
+        [Column("p_review_request_type")]
+        public int requestType { get; set; }
+        /// <summary>
+        /// 退回原因
+        /// </summary>
+        [Column("p_drawback_reason")]
+        public string DrawBackReason { get; set; }
         /// <summary>
         /// 審核人員
         /// </summary>

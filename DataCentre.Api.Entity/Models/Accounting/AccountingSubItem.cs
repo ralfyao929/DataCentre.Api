@@ -37,7 +37,7 @@ namespace DataCentre.Api.Entity.Models.Accounting
         /// 建立人員
         /// </summary>
         [Column("asi_creator")]
-        public DateTime? Creator { get; set; }
+        public string Creator { get; set; }
         /// <summary>
         /// 修改時間
         /// </summary>
@@ -47,6 +47,6 @@ namespace DataCentre.Api.Entity.Models.Accounting
         /// 修改人員
         /// </summary>
         [Column("asi_modifor")]
-        public DateTime? Modifier { get; set; }
+        public string Modifier { get; set; }
     }
 }
