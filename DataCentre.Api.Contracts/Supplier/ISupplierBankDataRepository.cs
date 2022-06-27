@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Contracts.Supplier
 {
-    public interface ISupplierContactDataRepository : IRepositoryBase<SupplierContact>
-    {
+    public interface ISupplierBankDataRepository :IRepositoryBase<SupplierBank>
+    { 
     }
 }

@@ -21,6 +21,8 @@ namespace DataCentre.Api.Contracts
         IProductReviewDataRepository ProductReviewData { get; }
         ISupplierReviewDataRepository SupplierReviewData { get; }
         ISupplierDataRepository SupplierData { get; }
+        ISupplierContactDataRepository SupplierContactData { get; }
+        ISupplierBankDataRepository SupplierBankData { get; }
         ICloudAccountManageDataRepository CloudAccountManageReviewData { get; }
         IProductTypeDataRepository ProductTypeData { get; }
         IProductClassDataRepository ProductClassData { get; }

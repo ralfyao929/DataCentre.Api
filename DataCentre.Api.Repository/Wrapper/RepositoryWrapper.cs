@@ -34,6 +34,8 @@ namespace DataCentre.Api.Repository.Wrapper
         private IProductReviewDataRepository? _productReviewData;
         private ISupplierReviewDataRepository? _supplierReviewData;
         private ISupplierDataRepository? _supplierData;
+        private ISupplierContactDataRepository? _supplierContactData;
+        private ISupplierBankDataRepository _supplierBankData;
         private ICloudAccountManageDataRepository? _cloudAccountManageData;
         private IProductTypeDataRepository? _productTypeDataRepository;
         private IProductClassDataRepository? _productClassDataRepository;
@@ -130,6 +132,27 @@ namespace DataCentre.Api.Repository.Wrapper
                     _supplierData = new SupplierDataRepository(_repositoryContext);
                 }
                 return _supplierData;
+            }
+        }
+        public ISupplierContactDataRepository SupplierContactData
+        {
+            get
+            {
+                if (_supplierContactData == null)
+                {
+                    _supplierContactData = new SupplierContactDataRepository(_repositoryContext);
+                }
+                return _supplierContactData;
+            }
+        }
+        public ISupplierBankDataRepository SupplierBankData {
+            get
+            {
+                if (_supplierBankData == null)
+                {
+                    _supplierBankData = new SupplierBankDataRepository(_repositoryContext);
+                }
+                return _supplierBankData;
             }
         }
         public ICloudAccountManageDataRepository CloudAccountManageReviewData
