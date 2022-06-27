@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCentre.Api.Repository
+namespace DataCentre.Api.Repository.Product
 {
     public class ProductReviewRepository : RepositoryBase<ProductReview>, IProductReviewDataRepository
     {

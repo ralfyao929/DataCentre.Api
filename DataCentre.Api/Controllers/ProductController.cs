@@ -131,7 +131,7 @@ namespace DataCentre.Api.Controllers
                     return result;
                 }
                 // 2.	供應商id是否存在
-                bool isSupplierExist = 
+                //bool isSupplierExist = 
                 bool hasProductAudit = false;
                 jwtObject.PrivilegeList.ForEach(o => 
                 { 

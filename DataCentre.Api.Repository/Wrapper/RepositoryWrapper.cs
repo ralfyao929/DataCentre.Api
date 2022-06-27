@@ -5,12 +5,16 @@ using DataCentre.Api.Contracts.Product;
 using DataCentre.Api.Entity.Models;
 using DataCentre.Api.Repository.Accounting;
 using DataCentre.Api.Repository.Company;
+using DataCentre.Api.Repository.Customer;
 using DataCentre.Api.Repository.Product;
+using DataCentre.Api.Repository.Cloud;
+using DataCentre.Api.Repository.Supplier;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataCentre.Api.Contracts.Supplier;
 
 namespace DataCentre.Api.Repository.Wrapper
 {
@@ -22,22 +26,23 @@ namespace DataCentre.Api.Repository.Wrapper
             _repositoryContext = context;
         }
         // Declaration
-        private ILoginDataRepository _login;
-        private IUserPrivilegeRepository _userPrivilege;
-        private IAPILogRepository _apiLog;
-        private IPrivilegeDataRepository _privilegeData;
-        private ICustomerReviewDataRepository _customerReviewData;
-        private IProductReviewDataRepository _productReviewData;
-        private ISupplierReviewDataRepository _supplierReviewData;
-        private ICloudAccountManageDataRepository _cloudAccountManageData;
-        private IProductTypeDataRepository _productTypeDataRepository;
-        private IProductClassDataRepository _productClassDataRepository;
-        private ICompanyDataRepository _companyDataRepository;
-        private ICompanyUnitDataRepository _companyUnitDataRepository;
-        private IAccountingItemDataRepository _accountingItemDataRepository;
-        private IAccountingSubItemDataRepository _accountingSubItemDataRepository;
-        private IAccountingProdTypeDataRepository _accountProdTypeData;
-        private IProductDataRepository _productData;
+        private ILoginDataRepository? _login;
+        private IUserPrivilegeRepository? _userPrivilege;
+        private IAPILogRepository? _apiLog;
+        private IPrivilegeDataRepository? _privilegeData;
+        private ICustomerReviewDataRepository? _customerReviewData;
+        private IProductReviewDataRepository? _productReviewData;
+        private ISupplierReviewDataRepository? _supplierReviewData;
+        private ISupplierDataRepository? _supplierData;
+        private ICloudAccountManageDataRepository? _cloudAccountManageData;
+        private IProductTypeDataRepository? _productTypeDataRepository;
+        private IProductClassDataRepository? _productClassDataRepository;
+        private ICompanyDataRepository? _companyDataRepository;
+        private ICompanyUnitDataRepository? _companyUnitDataRepository;
+        private IAccountingItemDataRepository? _accountingItemDataRepository;
+        private IAccountingSubItemDataRepository? _accountingSubItemDataRepository;
+        private IAccountingProdTypeDataRepository? _accountProdTypeData;
+        private IProductDataRepository? _productData;
         // Implementation
         public ILoginDataRepository LoginData
         {
@@ -115,6 +120,17 @@ namespace DataCentre.Api.Repository.Wrapper
                 }
                 return _supplierReviewData;
             } 
+        }
+        public ISupplierDataRepository SupplierData
+        {
+            get
+            {
+                if (_supplierData == null)
+                {
+                    _supplierData = new SupplierDataRepository(_repositoryContext);
+                }
+                return _supplierData;
+            }
         }
         public ICloudAccountManageDataRepository CloudAccountManageReviewData
         {
