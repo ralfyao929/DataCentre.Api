@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+//using Dapper;
 
 namespace DataCentre.Api.Utility
 {
@@ -67,5 +68,7 @@ namespace DataCentre.Api.Utility
                 return Encoding.UTF8.GetString(decrypt);
             }
         }
+
+        
     }
 }

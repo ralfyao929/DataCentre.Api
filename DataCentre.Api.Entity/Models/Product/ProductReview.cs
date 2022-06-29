@@ -15,6 +15,11 @@ namespace DataCentre.Api.Entity.Models.Product
         [Column("id")]
         public int id { get; set; }
         /// <summary>
+        /// 元產品ID
+        /// </summary>
+        [Column("pr_product_id")]
+        public int ProductId { get; set; }
+        /// <summary>
         /// 產品別ID
         /// </summary>
         [Column("p_product_type_id")]
@@ -34,6 +39,9 @@ namespace DataCentre.Api.Entity.Models.Product
         /// </summary>
         [Column("p_product_class_id")]
         public int productClassId { get; set; }
+        [IgnoreInsert]
+        [IgnoreSelect]
+        [IgnoreUpdate]
         /// <summary>
         /// 隸屬公司ID Array，建立多筆審核資料使用，不Mapping到DB
         /// </summary>

@@ -126,6 +126,21 @@ namespace DataCentre.Api.Module.Product
             return false;
         }
 
+
+        public int GetLatestProductId()
+        {
+            //throw new NotImplementedException();
+            int productId = 0;
+            //var list = _repositoryWrapper.ProductData.Query("")
+            //IdbConnection conn = _repositoryWrapper.ProductData.GetRepositoryContext().CreateConnection();
+            var list = _repositoryWrapper.ProductData.findAll().OrderByDescending(p => p.id);
+            if(list.Count() > 0)
+            {
+                productId = list.ToList()[0].ProductId;
+            }
+            return productId;
+        }
+
         public DataCentre.Api.Entity.Models.Product.Product? GetProductView(string? _productName2)
         {
             var prod = _repositoryWrapper.ProductData.FindByCondition(product => product != null && product.productName2 != null && product.productName2.Equals(_productName2));
@@ -163,6 +178,16 @@ namespace DataCentre.Api.Module.Product
                 commonTypes.Add(c1);
             }
             return commonTypes;
+        }
+
+        public List<object> GetOrderUsedList(int productId, int companyId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<object> GetCloudUsedList(int productId, int companyId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
