@@ -14,6 +14,8 @@ using System.Text;
 using DataCentre.Api.Module.Supplier;
 using System.Reflection;
 using DataCentre.Api.Entity.Models.Sales;
+using DataCentre.Api.Entity.Models;
+using DataCentre.Api.Entity;
 
 namespace DataCentre.Api.Controllers
 { 
@@ -46,6 +48,11 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 產品維護-主頁
+        /// </summary>
+        /// <param name="productName">產品名稱</param>
+        /// <returns>頁面上需要帶出的下拉清單資料</returns>
         [HttpGet]
         public ApiResult<ProductMainView> home(string? productName)
         {
@@ -72,8 +79,13 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 產品維護-查詢
+        /// </summary>
+        /// <param name="productName2">產品細項</param>
+        /// <returns>產品詳細資料內容</returns>
         [HttpGet]
-        public ApiResult<ProductView> data(string? productName2)
+        public ApiResult<ProductView> dataList(string? productName2)
         {
             ApiResult<ProductView> result = new ApiResult<ProductView>();
             ProductModule productModule = new ProductModule(_repositoryWrapper);
@@ -94,6 +106,35 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 產品維護-刪除
+        /// </summary>
+        /// <param name="productName2">要刪除的產品細項</param>
+        /// <returns>刪除結果</returns>
+        public ApiResult<object> delete(string productName2) 
+        {
+            ApiResult<object> result = new ApiResult<object>();
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex + ex.StackTrace);
+                result.Code = "9999";
+            }
+            return result;
+        }
+        /// <summary>
+        /// 產品維護-查詢列表
+        /// 查詢要審核的產品清單
+        /// </summary>
+        /// <param name="productTypeId">產品型別</param>
+        /// <param name="productName1">產品細項總稱</param>
+        /// <param name="productName2">產品細項</param>
+        /// <param name="personInChargeName">負責人ID</param>
+        /// <param name="supplierName">供應商ID</param>
+        /// <returns></returns>
         [HttpGet]
         public ApiResult<List<Product>> dataList(int? productTypeId, string? productName1, string? productName2, int? personInChargeName, string? supplierName)
         {
@@ -112,8 +153,14 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 產品新增/修改，寫資料到[請求產品審核]資料表
+        /// 以oldProductId來判斷是否為新增或修改
+        /// </summary>
+        /// <param name="data">要新增/修改的產品</param>
+        /// <returns>執行結果</returns>
         [HttpPost]
-        public ApiResult<object> data(ProductReview data)
+        public ApiResult<object> data(ProductView data)
         {
             ApiResult<object> result = new ApiResult<object>();
             ProductModule productModule = new ProductModule(_repositoryWrapper);
@@ -152,37 +199,56 @@ namespace DataCentre.Api.Controllers
                         return;
                     }
                 });
-                if(hasProductAudit)
+                data.reviewStatus = (int)ReviewType.Request;
+                if (data.oldProductId == null)//新增
                 {
-                    // 權限只要擁有產品維護(檢核)->直接寫到[產品資料]
-                    // 檢查產品資料是否存在，如存在則Update
-                    Product product = new Product();
-                    product.ProductId = productModule.GetLatestProductId();
-                    product.productName1 = data.productName1;
-                    product.productName2 = data.productName2;
-                    product.productTypeId = data.productTypeId;
-                    product.productClassId = data.productClassId;
-                    product.supplierName = data.supplierName;
-                    product.personInChargeId = data.personInChargeId;
-                    product.departmentId = int.Parse(data.departmentId);
-                    product.accounting = data.accounting;
-                    product.accountingBranch = data.accountingBranch;
-                    product.accountingProductType = data.accountingProductType;
-                    product.isSetCost = data.isSetCost;
-                    product.createUser = data.createUser;
-                    product.createdTime = data.createdTime;
-                    string[] strCompanyArr = data.companyIdArr.Split(',');
-                    foreach (string comp in strCompanyArr)
+                    if (hasProductAudit)
                     {
-                        product.companyId = int.Parse(comp);
-                        _repositoryWrapper.ProductData.Create(product);
+                        // 權限只要擁有產品維護(檢核)->直接寫到[產品資料]
+                        // 檢查產品資料是否存在，如存在則Update
+                        Product product = new Product();
+                        product.ProductId = productModule.GetLatestProductId();
+                        product.productName1 = data.productName1;
+                        product.productName2 = data.productName2;
+                        product.productTypeId = (int)(data.productTypeId != null ? data.productTypeId : -1);
+                        product.productClassId = (int)(data.productClassId != null ? data.productClassId : -1);
+                        product.supplierName = (int)(data.supplierName != null ? data.supplierName : -1);
+                        product.personInChargeId = (int)(data.personInChargeId != null ? data.personInChargeId : -1);
+                        product.departmentId = (int)(data.departmentId != null ? data.departmentId : -1);
+                        product.accounting = (int)(data.accounting != null ? data.accounting : -1);
+                        product.accountingBranch = (int)(data.accountingBranch != null ? data.accountingBranch : -1);
+                        product.accountingProductType = (int)(data.accountingProductType != null ? data.accountingProductType : -1);
+                        product.isSetCost = (int)(data.isSetCost != null ? data.isSetCost : -1);
+                        product.createUser = jwtObject.Id;//data. != null ? data.createUser : "";
+                        product.createdTime = DateTime.Now;
+                        string[] strCompanyArr = (data.companyIdArray != null ? data.companyIdArray.Split(',') : null);
+                        if (strCompanyArr != null)
+                        {
+                            foreach (string comp in strCompanyArr)
+                            {
+                                product.companyId = int.Parse(comp);
+                                _repositoryWrapper.ProductData.Create(product);
+                            }
+                        }
+                        else
+                        {
+                            result.Code = "3014";//負責公司至少要有1個
+                            return result;
+                        }
+                    }
+                    else
+                    {
+                        // 權限只有產品維護->寫到[請求新增、修改刪除產品資料]、[請求產品資料隸屬公司]，因為要審核
+                        data.reviewStatus = (int)RequestType.Add;
+                        _repositoryWrapper.ProductReviewData.Create((ProductReview)data);
                     }
                 }
                 else
                 {
-                    // 權限只有產品維護->寫到[請求新增、修改刪除產品資料]、[請求產品資料隸屬公司]，因為要審核
-                    _repositoryWrapper.ProductReviewData.Create(data);
+                    data.requestType = (int)RequestType.Modify;
+                    _repositoryWrapper.ProductReviewData.Update((ProductReview)data);
                 }
+                result.Code = "0000";//成功
             }
             catch(Exception ex)
             {
@@ -191,6 +257,14 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+        /// <summary>
+        /// 產品審核，將資料由[請求產品審核]資料表寫到[產品]資料表
+        /// </summary>
+        /// <param name="productId">要審核的請求審核產品資料ID</param>
+        /// <param name="reviewStatus">審核結果</param>
+        /// <param name="reason">退回原因</param>
+        /// <returns></returns>
+        [HttpGet]
         public ApiResult<object> review(int productId, int reviewStatus, string reason)
         {
             ApiResult<object> result = new ApiResult<object>();
@@ -203,6 +277,7 @@ namespace DataCentre.Api.Controllers
                             JwsAlgorithm.HS256);
                 bool hasProductAudit = false;
                 ProductModule pm = new ProductModule(_repositoryWrapper);
+                #region 1009 您沒有權限審核產品資料
                 jwtObject.PrivilegeList.ForEach(o =>
                 {
                     if (o.PrivilegeId == 9)
@@ -216,78 +291,162 @@ namespace DataCentre.Api.Controllers
                     result.Code = "1009";//您沒有權限審核產品資料
                     return result;
                 }
+                #endregion
                 var ProductList = _repositoryWrapper.ProductReviewData.FindByCondition(pr => pr.id == productId);
                 if(ProductList.Count() > 0)
                 {
                     var ProductReviewData = ProductList.ToList()[0];//要審核的產品資料
-                    if(ProductReviewData.reviewStatus == 1)
-                    {
-                        result.Code = "4003";//審核失敗，因為審核狀態已完成。
-                        return result;
-                    }
-                    var ProductToReview_Name2 = _repositoryWrapper.ProductData.FindByCondition(p => p.productName2 == ProductReviewData.productName2);
-                    if(ProductToReview_Name2.Count() > 0)
-                    {
-                        result.Code = "2005";//產品細項欄位重複了
-                        return result;
-                    }
-                    var supplierList = _repositoryWrapper.SupplierData.FindByCondition(s => s.id == ProductReviewData.supplierName);
-                    if(supplierList.Count() == 0)
-                    {
-                        result.Code = "3013";//新增產品的時候，有相對應的公司沒有供應商名字
-                        return result;
-                    }
-                    if(ProductReviewData.companyIdArr != null && string.IsNullOrEmpty(ProductReviewData.companyIdArr.Trim()))
+                    string[] productCompanies = ProductReviewData.companyIdArr.Split(',');
+                    #region 檢查邏輯
+                    #region 3014 負責公司至少要有1個
+                    if (ProductReviewData.companyIdArr != null && string.IsNullOrEmpty(ProductReviewData.companyIdArr.Trim()))
                     {
                         result.Code = "3014";//負責公司至少要有1個
                         return result;
                     }
-                    //產品減少負責公司時候：需判斷該負責公司的產品是否->
-                    // 1.已經有開過訂單、雲端帳號使用了，都不可以減少
-                    //var ProductToReview = _repositoryWrapper.ProductData.FindByCondition(p => p.ProductId == ProductReviewData.ProductId);
-                    //int orderCloudUsedCount = 0;
-                    //if(ProductToReview.Count() > 0)
-                    //{
-                    //    string[] companyOwnReview = ProductReviewData.companyIdArr.Split(',');
-                    //    foreach (Product pp in ProductToReview)
-                    //    {
-                    //        var orderUsedList = pm.GetOrderUsedList(pp.ProductId, pp.companyId);
-                    //        orderCloudUsedCount += orderUsedList.Count();
-                    //        var cloudUsedList = pm.GetCloudUsedList(pp.ProductId, pp.companyId);
-                    //        orderCloudUsedCount += cloudUsedList.Count();
-                    //        int inDex = 0;
-                    //        foreach(string companyReview in companyOwnReview)
-                    //        {
-                    //            if(companyReview == pp.companyId.ToString())
-                    //            {
-
-                    //            }
-                    //        }
-                    //    }
-                    //    bool isOrderCloudUsedProd = false;
-                    //    if (orderCloudUsedCount > 0)
-                    //        isOrderCloudUsedProd = true;
-                        
-                        
-                    //}
-                    //var Product_List = _repositoryWrapper.ProductData.FindByCondition(p)
-                    //string[] companyList = ProductReviewData.companyIdArr.Split(',');
-                    //foreach(string company in companyList)
-                    //{
-                    //    var company1_List = _repositoryWrapper.CompanyData.FindByCondition(c => c.id == int.Parse(company));
-                    //    if(company1_List.Count() > 0)
-                    //    {
-                    //        Company c1 = (Company)company1_List.ToList()[0];
-                    //        if(c1.Supp)
-                    //    }
-                    //}
+                    #endregion
+                    #region 4003 審核失敗，因為審核狀態已完成。
+                    if (ProductReviewData.reviewStatus == 1)
+                    {
+                        result.Code = "4003";//審核失敗，因為審核狀態已完成。
+                        return result;
+                    }
+                    #endregion
+                    #region 2005 產品細項欄位重複了
+                    var ProductToReview_Name2 = _repositoryWrapper.ProductData.FindByCondition(p => p.productName2 == ProductReviewData.productName2);
+                    if (ProductToReview_Name2.Count() > 0)
+                    {
+                        result.Code = "2005";//產品細項欄位重複了
+                        return result;
+                    }
+                    #endregion
+                    #region 判斷是否AD存在 TO-DO
+                    #endregion
+                    #region 3013 新增產品的時候，有相對應的公司沒有供應商名字
+                    var supplierList = _repositoryWrapper.SupplierData.FindByCondition(s => s.id == ProductReviewData.supplierName);
+                    if (supplierList.Count() == 0)
+                    {
+                        result.Code = "3013";//新增產品的時候，有相對應的公司沒有供應商名字
+                        return result;
+                    }
+                    #endregion
+                    #endregion
+                    #region 實際交易邏輯
+                    switch (ProductReviewData.requestType)
+                    {
+                        case (int)ReviewType.Request:
+                            #region 實際寫入新增
+                            foreach (string company in productCompanies)
+                            {
+                                Product p = new Product(ProductReviewData);
+                                if (p.ProductId == null)
+                                {
+                                    p.ProductId = pm.GetLatestProductId();
+                                }
+                                _repositoryWrapper.ProductData.Create(p);
+                            }
+                            #endregion
+                            break;
+                        case (int)ReviewType.Agree:
+                            #region 判斷減少負責公司
+                            // 產品減少負責公司時候：需判斷該負責公司的產品是否->
+                            // 1.已經有開過訂單、雲端帳號使用了，都不可以減少
+                            // 抓出該產品所要減少的公司資料
+                            //    a.找出該 ProductId底下，所有隸屬公司的資料
+                            var ProductToReview = _repositoryWrapper.ProductData.FindByCondition(p => p.ProductId == ProductReviewData.ProductId);
+                            //    b.與該審核產品的companyIdArr比對CompanyId，如果存在就移除
+                            string[] prodToReviewCompanies = ProductReviewData.companyIdArr.Split(',');
+                            List<Product> ProductsCompany = ProductToReview.ToList();
+                            foreach (string prodToReviewComp in prodToReviewCompanies)
+                            {
+                                int companyIdx = -1;
+                                int idx = 0;
+                                ProductsCompany.ForEach(p => {
+                                    if (!string.IsNullOrEmpty(prodToReviewComp.Trim()) && p.companyId == int.Parse(prodToReviewComp.Trim()))
+                                    {
+                                        companyIdx = idx;//比對到負責的公司ID，記住其Index後跳出
+                                        return;
+                                    }
+                                    idx++;
+                                });
+                                // 依據其負責的Index，由列表中移除該產品
+                                if (companyIdx > 0)
+                                {
+                                    ProductsCompany.RemoveAt(companyIdx);
+                                }
+                            }
+                            //    c.如果移除完了，ProductsCompany Length不為0，表示此次的審核，其負責公司有減少，需要再進一步判斷
+                            int orderCloudUsedCount = 0;//有被訂單、雲端使用過的次數
+                            ProductsCompany.ForEach(pp => {
+                                //    c.1 判斷是否該產品、公司，已經開過訂單
+                                var orderUsedList = pm.GetOrderUsedList((int)(pp.ProductId == null ? 0 : pp.ProductId), pp.companyId);
+                                orderCloudUsedCount += orderUsedList.Count();//加總次數
+                                                                             //    c.2 判斷是否該產品、公司，已經有雲端帳號
+                                var cloudUsedList = pm.GetCloudUsedList((int)(pp.ProductId == null ? 0 : pp.ProductId), pp.companyId);
+                                orderCloudUsedCount += cloudUsedList.Count();//加總次數
+                            });
+                            if (orderCloudUsedCount > 0)
+                            {
+                                result.Code = "3015";//無法申請減少產品的隸屬公司資料、因為已經被其他訂單或雲端帳號所使用。
+                                return result;
+                            }
+                            #endregion
+                            #region 資料存在的就更新，不存在的就Insert
+                            foreach (string company in productCompanies)
+                            {
+                                Product p = new Product(ProductReviewData);
+                                var nowProductData = _repositoryWrapper.ProductData.FindByCondition(p => p.ProductId == ProductReviewData.ProductId && p.companyId.ToString() == company);
+                                if (nowProductData.Count() > 0)
+                                {
+                                    _repositoryWrapper.ProductData.Update(p);
+                                }
+                                else
+                                {
+                                    _repositoryWrapper.ProductData.Create(p);
+                                }
+                            }
+                            #endregion
+                            #region 如果有減少負責公司的Product就要刪除
+                            foreach (Product productToRemove in ProductsCompany)
+                            {
+                                _repositoryWrapper.ProductData.Delete(productToRemove);
+                            }
+                            #endregion
+                            break;
+                        case (int)ReviewType.Reject:
+                            #region 刪除產品-公司資料
+                            foreach (string company in productCompanies)
+                            {
+                                var pDeleteList = _repositoryWrapper.ProductData.FindByCondition(p => p.ProductId == ProductReviewData.ProductId && p.companyId.ToString() == company);
+                                if (pDeleteList.Count() > 0)
+                                {
+                                    foreach(Product pDelete in pDeleteList)
+                                    {
+                                        _repositoryWrapper.ProductData.Delete(pDelete);
+                                    }
+                                }
+                            }
+                            #endregion
+                            break;
+                    }
+                    #region 更新ProductReview資料：狀態、原因、審核人員、日期
+                    ProductReviewData.reviewStatus = reviewStatus;
+                    ProductReviewData.DrawBackReason = reason;
+                    ProductReviewData.reviewer = jwtObject.Id;
+                    ProductReviewData.reviewDate = DateTime.Now;
+                    _repositoryWrapper.ProductReviewData.Update(ProductReviewData);
+                    #endregion
+                    #endregion
+                    result.Code = "0000";//成功
+                    return result;
                 }
                 else
                 {
+                    #region 4011 審核失敗，該待審核產品資料不存在。
                     result.Code = "4011";//審核失敗，該待審核產品資料不存在。
                     return result;
+                    #endregion
                 }
-                //var ProductReviewList = _repositoryWrapper.ProductReviewData.FindByCondition(pr => pr.id == productId);
             }
             catch(Exception ex)
             {
@@ -296,5 +455,6 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
+
     }
 }

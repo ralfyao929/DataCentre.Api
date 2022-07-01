@@ -9,6 +9,28 @@ namespace DataCentre.Api.Entity.Models.Product
     [Table("Product")]
     public class Product
     {
+        public Product() { }
+        public Product(ProductReview productReview)
+        {
+            ProductId = productReview.ProductId;
+            productTypeId = (int)(productReview.productTypeId!=null ? productReview.productTypeId : -1);
+            productName1 = productReview.productName1;
+            productName2 = productReview.productName2;
+            productClassId = (int)(productReview.productClassId != null ? productReview.productClassId : -1);
+            productTypeId = (int)(productReview.productTypeId != null ? productReview.productTypeId : -1);
+            personInChargeId = (int)(productReview.personInChargeId != null ? productReview.personInChargeId : -1);
+            isSetCost = (int)(productReview.isSetCost != null ? productReview.isSetCost : -1);
+            accounting = (int)(productReview.accounting != null ? productReview.accounting : -1);
+            accountingBranch = (int)(productReview.accountingBranch != null ? productReview.accountingBranch : -1);
+            accountingProductType = (int)(productReview.accountingProductType != null ? productReview.accountingProductType : -1);
+            companyId = productReview.companyId;
+            departmentId = (int)(productReview.departmentId != null ? productReview.departmentId : -1);
+            supplierName = (int)(productReview.supplierName != null ? productReview.supplierName : -1);
+            createUser = productReview.createUser;
+            createdTime = productReview.createdTime;
+            modifyUser = productReview.reviewer;
+            modifyTime = DateTime.Now;
+        }
         /// <summary>
         /// 資料PK
         /// </summary>
@@ -19,7 +41,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 產品ID
         /// </summary>
         [Column("p_id")]
-        public int ProductId { get; set; }
+        public int? ProductId { get; set; }
         /// <summary>
         /// 產品別ID
         /// </summary>

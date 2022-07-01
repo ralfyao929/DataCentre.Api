@@ -23,7 +23,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 產品別ID
         /// </summary>
         [Column("p_product_type_id")]
-        public int productTypeId { get; set; }
+        public int? productTypeId { get; set; }
         /// <summary>
         /// 產品細項總稱
         /// </summary>
@@ -38,7 +38,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 產品類ID
         /// </summary>
         [Column("p_product_class_id")]
-        public int productClassId { get; set; }
+        public int? productClassId { get; set; }
         [IgnoreInsert]
         [IgnoreSelect]
         [IgnoreUpdate]
@@ -55,37 +55,37 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 供應商ID
         /// </summary>
         [Column("p_supplier_id")]
-        public int supplierName { get; set; }
+        public int? supplierName { get; set; }
         /// <summary>
         /// 負責人ID
         /// </summary>
         [Column("p_responser_id")]
-        public int personInChargeId { get; set; }
+        public int? personInChargeId { get; set; }
         /// <summary>
         /// 負責單位
         /// </summary>
         [Column("p_responser_dept")]
-        public string departmentId { get; set; }
+        public int? departmentId { get; set; }
         /// <summary>
         /// 是否列入成本
         /// </summary>
         [Column("p_is_cost")]
-        public int isSetCost { get; set; }
+        public int? isSetCost { get; set; }
         /// <summary>
         /// 會計科目id
         /// </summary>
         [Column("p_account")]
-        public int accounting { get; set; }
+        public int? accounting { get; set; }
         /// <summary>
         /// 會計子科目id
         /// </summary>
         [Column("p_account_sub")]
-        public int accountingBranch { get; set; }
+        public int? accountingBranch { get; set; }
         /// <summary>
         /// 會計產品別id
         /// </summary>
         [Column("p_account_prod")]
-        public int accountingProductType { get; set; }
+        public int? accountingProductType { get; set; }
         /// <summary>
         /// 建立人員
         /// </summary>
@@ -121,6 +121,5 @@ namespace DataCentre.Api.Entity.Models.Product
         /// </summary>
         [Column("p_review_date")]
         public DateTime reviewDate { get; set; }
-
     }
 }

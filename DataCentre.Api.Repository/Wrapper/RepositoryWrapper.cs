@@ -20,7 +20,7 @@ namespace DataCentre.Api.Repository.Wrapper
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private DapperContext _repositoryContext;
+        private DapperContext? _repositoryContext;
         public RepositoryWrapper(DapperContext context)
         {
             _repositoryContext = context;

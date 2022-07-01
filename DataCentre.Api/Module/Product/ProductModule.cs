@@ -136,7 +136,14 @@ namespace DataCentre.Api.Module.Product
             var list = _repositoryWrapper.ProductData.findAll().OrderByDescending(p => p.id);
             if(list.Count() > 0)
             {
-                productId = list.ToList()[0].ProductId;
+                if (list.ToList()[0].ProductId != null)
+                {
+                    productId = (int)(list.ToList()[0].ProductId) + 1;
+                }
+                else
+                {
+                    throw new Exception("產生ProductId異常");
+                }
             }
             return productId;
         }
