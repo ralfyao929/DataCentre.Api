@@ -116,7 +116,28 @@ namespace DataCentre.Api.Controllers
             ApiResult<object> result = new ApiResult<object>();
             try
             {
-                
+                string token = Request.Headers["Authorization"];
+                JwtAuthObject jwtObject = Jose.JWT.Decode<JwtAuthObject>(
+                            token,
+                            Encoding.UTF8.GetBytes(Utility.Utility.key),
+                            JwsAlgorithm.HS256);
+                bool hasProductMaintain = false;
+                #region 1004 您沒有權限申請新增/刪除/修改相關資訊
+                jwtObject.PrivilegeList.ForEach(o =>
+                {
+                    if (o.PrivilegeId == 8 || o.PrivilegeId == 9)
+                    {
+                        hasProductMaintain = true;
+                        return;
+                    }
+                });
+                if(!hasProductMaintain)
+                {
+                    result.Code = "1004";//您沒有權限審核產品資料
+                    return result;
+                }
+                #endregion
+
             }
             catch (Exception ex)
             {
@@ -455,6 +476,6 @@ namespace DataCentre.Api.Controllers
             }
             return result;
         }
-
+        //public ApiResult<>
     }
 }

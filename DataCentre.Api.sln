@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api", "DataCentre.Api\DataCentre.Api.csproj", "{B4A7B070-1CC8-4E61-AB80-BB684270F6EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api", "DataCentre.Api\DataCentre.Api.csproj", "{B4A7B070-1CC8-4E61-AB80-BB684270F6EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.Contracts", "DataCentre.Api.Contracts\DataCentre.Api.Contracts.csproj", "{C624C02E-4432-4830-94A0-C46972AF5125}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api.Contracts", "DataCentre.Api.Contracts\DataCentre.Api.Contracts.csproj", "{C624C02E-4432-4830-94A0-C46972AF5125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.LoggerService", "DataCentre.Api.LoggerService\DataCentre.Api.LoggerService.csproj", "{9687A915-3B90-4F7C-AEA9-3BBA8D5A304D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api.LoggerService", "DataCentre.Api.LoggerService\DataCentre.Api.LoggerService.csproj", "{9687A915-3B90-4F7C-AEA9-3BBA8D5A304D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.Entity", "DataCentre.Api.Entity\DataCentre.Api.Entity.csproj", "{D1EAA6C6-FFE8-499E-8257-CF03CBB0001F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api.Entity", "DataCentre.Api.Entity\DataCentre.Api.Entity.csproj", "{D1EAA6C6-FFE8-499E-8257-CF03CBB0001F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.Repository", "DataCentre.Api.Repository\DataCentre.Api.Repository.csproj", "{5865FF30-FDB3-4AD4-BCF4-AC64BD8A41E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api.Repository", "DataCentre.Api.Repository\DataCentre.Api.Repository.csproj", "{5865FF30-FDB3-4AD4-BCF4-AC64BD8A41E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.Utility", "DataCentre.Api.Utility\DataCentre.Api.Utility.csproj", "{446187F5-D5E6-4758-9A46-A4EDFC0BDE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCentre.Api.Utility", "DataCentre.Api.Utility\DataCentre.Api.Utility.csproj", "{446187F5-D5E6-4758-9A46-A4EDFC0BDE1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCentre.Api.EntityGenerator", "DataCentre.Api.EntityGenerator\DataCentre.Api.EntityGenerator.csproj", "{7D62C4B7-2ABB-4371-BA89-3FE6F707E678}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{446187F5-D5E6-4758-9A46-A4EDFC0BDE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{446187F5-D5E6-4758-9A46-A4EDFC0BDE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{446187F5-D5E6-4758-9A46-A4EDFC0BDE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D62C4B7-2ABB-4371-BA89-3FE6F707E678}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D62C4B7-2ABB-4371-BA89-3FE6F707E678}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D62C4B7-2ABB-4371-BA89-3FE6F707E678}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D62C4B7-2ABB-4371-BA89-3FE6F707E678}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
