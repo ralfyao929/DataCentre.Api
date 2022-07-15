@@ -30,7 +30,7 @@ namespace DataCentre.Api.EntityGenerator.Utility
 	                               where table_schema='{0}'";
         public static string PLEASE_GENERATE_TABLE_LIST { get; }="請先產生Table列表!";
         public static string? MYSQL_SELECT_COLUMN_SQL { get; } =
-                                @"SELECT COLUMN_NAME ColumnName, DATA_TYPE Type, COLUMN_KEY IsPrimaryKey
+                                @"SELECT COLUMN_NAME ColumnName, DATA_TYPE Type, COLUMN_KEY IsPrimaryKey, COLUMN_COMMENT Comment
                                     FROM INFORMATION_SCHEMA.COLUMNS
 	                               where table_schema='{0}' AND TABLE_NAME = '{1}' ORDER BY ORDINAL_POSITION;";
         public static string PLEASE_INPUT_NAMESPACE { get; } = "請輸入命名空間!";

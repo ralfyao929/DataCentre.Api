@@ -214,6 +214,12 @@ namespace DataCentre.Api.EntityGenerator
                                     sr.WriteLine("    {");
                                     foreach (DataRow row in ds.Tables[0].Rows)
                                     {
+                                        if(!string.IsNullOrEmpty(row["Comment"].ToString()))
+                                        {
+                                            sr.WriteLine("        /// <summary>");
+                                            sr.WriteLine("        /// "+ row["Comment"].ToString() + "");
+                                            sr.WriteLine("        /// </summary>");
+                                        }
                                         if (row["IsPrimaryKey"].ToString() == "PRI")
                                         {
                                             sr.WriteLine("        [Key]");
