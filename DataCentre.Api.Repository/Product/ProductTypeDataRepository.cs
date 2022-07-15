@@ -1,7 +1,6 @@
 ﻿using DataCentre.Api.Contracts;
 using DataCentre.Api.Contracts.Product;
 using DataCentre.Api.Entity.Models;
-using DataCentre.Api.Entity.Models.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;

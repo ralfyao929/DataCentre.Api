@@ -33,6 +33,15 @@ namespace DataCentre.Api.EntityGenerator.Utility
                                 @"SELECT COLUMN_NAME ColumnName, DATA_TYPE Type, COLUMN_KEY IsPrimaryKey, COLUMN_COMMENT Comment
                                     FROM INFORMATION_SCHEMA.COLUMNS
 	                               where table_schema='{0}' AND TABLE_NAME = '{1}' ORDER BY ORDINAL_POSITION;";
+        public static string? MS_SQL_SELECT_COLUMN_SQL { get; } =
+                                @"SELECT c.name ColumnName,  y.name Type, c.is_identity IsPrimaryKey, C1.value Comment
+                                    FROM sys.tables t 
+                                    JOIN sys.columns c ON t.object_id = c.object_id
+                                    JOIN sys.types y ON y.user_type_id = c.user_type_id
+                                    LEFT JOIN sys.extended_properties C1 ON C1.major_id = c.object_id AND C1.minor_id = c.column_id
+                                    WHERE t.name = '{0}'
+                                    order by c.column_id;";
         public static string PLEASE_INPUT_NAMESPACE { get; } = "請輸入命名空間!";
+        public static string? MS_SQL_LIST_TABLE_SQL { get; } = "select t.name TableName FROM sys.tables t ";
     }
 }

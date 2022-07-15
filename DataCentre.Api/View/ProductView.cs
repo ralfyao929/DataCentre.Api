@@ -1,4 +1,4 @@
-﻿using DataCentre.Api.Entity.Models.Product;
+﻿using DataCentre.Api.Entity.Models;
 
 namespace DataCentre.Api.View
 {

@@ -1,4 +1,4 @@
-﻿using DataCentre.Api.Entity.Models.Product;
+﻿using DataCentre.Api.Entity.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

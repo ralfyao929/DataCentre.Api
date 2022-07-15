@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Contracts.Product
 {
-    public interface IProductDataRepository : IRepositoryBase<Entity.Models.Product.Product>
+    public interface IProductDataRepository : IRepositoryBase<Entity.Models.Product>
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 
-namespace DataCentre.Api.Entity.Models.Product
+namespace DataCentre.Api.Entity.Models
 {
     /// <summary>
     /// 請求異動產品資料
@@ -18,7 +18,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 元產品ID
         /// </summary>
         [Column("pr_product_id")]
-        public int ProductId { get; set; }
+        public short ProductId { get; set; }
         /// <summary>
         /// 產品別ID
         /// </summary>
@@ -38,7 +38,7 @@ namespace DataCentre.Api.Entity.Models.Product
         /// 產品類ID
         /// </summary>
         [Column("p_product_class_id")]
-        public int? productClassId { get; set; }
+        public short? productClassId { get; set; }
         [IgnoreInsert]
         [IgnoreSelect]
         [IgnoreUpdate]

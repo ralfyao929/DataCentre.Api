@@ -27,7 +27,6 @@ namespace DataCentre.Api.EntityGenerator
                 }
             }
         }
-
         private void btnTestConnection_Click(object sender, EventArgs e)
         {
             IDbConnection conn = null;
@@ -94,7 +93,6 @@ namespace DataCentre.Api.EntityGenerator
                 MessageBox.Show(Constant.TEST_OPEN_CONN_ERROR); 
             }
         }
-
         private void btnSaveSetting_Click(object sender, EventArgs e)
         {
             try
@@ -119,11 +117,18 @@ namespace DataCentre.Api.EntityGenerator
                 MessageBox.Show(ex+ex.StackTrace);
             }
         }
-
         private void btnListTable_Click(object sender, EventArgs e)
         {
             clbTableList.Items.Clear();
-            DataSet ds = GetTabColDataSet(string.Format(Constant.MYSQL_LIST_TABLE_SQL, txtDBName.Text));//new DataSet();
+            DataSet ds = new DataSet();
+            if (cboDBType.Text.ToUpper() == Constant.MYSQL)
+            {
+                ds = GetTabColDataSet(string.Format(Constant.MYSQL_LIST_TABLE_SQL, txtDBName.Text));//new DataSet();
+            }
+            else if (cboDBType.Text.ToUpper() == Constant.MS_SQL)
+            {
+                ds = GetTabColDataSet(Constant.MS_SQL_LIST_TABLE_SQL);
+            }
             int idex = 0;
             foreach (DataRow row in ds.Tables[0].Rows)
             {
@@ -150,6 +155,7 @@ namespace DataCentre.Api.EntityGenerator
                 connString = string.Format(Constant.DB_CONN_MS_SQL, txtIP.Text, txtUserName.Text, txtPassword.Text, txtDBName.Text);
                 conn = new SqlConnection(connString);
                 dataAdapter = new SqlDataAdapter();
+                strSQL = stSQL;
             }
             if(conn != null)
                 conn.Open();
@@ -182,90 +188,97 @@ namespace DataCentre.Api.EntityGenerator
                     MessageBox.Show(Constant.PLEASE_INPUT_NAMESPACE);
                     return;
                 }
-                if (cboDBType.Text.ToUpper() == Constant.MYSQL)
+                
+                for (int i = 0; i < clbTableList.Items.Count; i++)
                 {
-                    for (int i = 0; i < clbTableList.Items.Count; i++)
+                    bool chk = clbTableList.GetItemChecked(i);
+                    if (chk)
                     {
-                        bool chk = clbTableList.GetItemChecked(i);
-                        if (chk)
+                        string tableName = clbTableList.Items[i].ToString();
+                        DataSet ds = new DataSet();
+                        if (cboDBType.Text.ToUpper() == Constant.MYSQL)
                         {
-                            string tableName = clbTableList.Items[i].ToString();
-                            DataSet ds = GetTabColDataSet(string.Format(Constant.MYSQL_SELECT_COLUMN_SQL, txtDBName.Text, tableName));
-                            if (File.Exists(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs"))
+                            ds = GetTabColDataSet(string.Format(Constant.MYSQL_SELECT_COLUMN_SQL, txtDBName.Text, tableName));
+                        }
+                        else if (cboDBType.Text.ToUpper() == Constant.MS_SQL)
+                        {
+                            ds = GetTabColDataSet(string.Format(Constant.MS_SQL_SELECT_COLUMN_SQL, tableName));
+                        }
+                        if (File.Exists(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs"))
+                        {
+                            if(!Directory.Exists(txtOutputPath.Text.Trim() + @"\Backup\"))
                             {
-                                if(!Directory.Exists(txtOutputPath.Text.Trim() + @"\Backup\"))
-                                {
-                                    Directory.CreateDirectory(txtOutputPath.Text.Trim() + @"\Backup\");
-                                }
-                                File.Move(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs", txtOutputPath.Text.Trim() + @"\Backup\" + tableName + ".cs." + DateTime.Now.ToString("yyyyMMddHHmmss"));
+                                Directory.CreateDirectory(txtOutputPath.Text.Trim() + @"\Backup\");
                             }
-                            using (FileStream str = File.Create(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs"))
+                            File.Move(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs", txtOutputPath.Text.Trim() + @"\Backup\" + tableName + ".cs." + DateTime.Now.ToString("yyyyMMddHHmmss"));
+                        }
+                        using (FileStream str = File.Create(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs"))
+                        {
+                            using (var sr = new StreamWriter(str))
                             {
-                                using (var sr = new StreamWriter(str))
+                                sr.WriteLine("using System;");
+                                if(radDapper.Checked)
+                                    sr.WriteLine("using Dapper;");
+                                if(radSystemAnno.Checked)
+                                    sr.WriteLine("using System.ComponentModel.DataAnnotations;");
+                                sr.WriteLine("namespace " + txtNamespace.Text);
+                                sr.WriteLine("{");
+                                sr.WriteLine("    public class " + tableName);
+                                sr.WriteLine("    {");
+                                foreach (DataRow row in ds.Tables[0].Rows)
                                 {
-                                    sr.WriteLine("using System;");
-                                    if(radDapper.Checked)
-                                        sr.WriteLine("using Dapper;");
-                                    if(radSystemAnno.Checked)
-                                        sr.WriteLine("using System.ComponentModel.DataAnnotations;");
-                                    sr.WriteLine("namespace " + txtNamespace.Text);
-                                    sr.WriteLine("{");
-                                    sr.WriteLine("    public class " + tableName);
-                                    sr.WriteLine("    {");
-                                    foreach (DataRow row in ds.Tables[0].Rows)
+                                    if(!string.IsNullOrEmpty(row["Comment"].ToString()))
                                     {
-                                        if(!string.IsNullOrEmpty(row["Comment"].ToString()))
-                                        {
-                                            sr.WriteLine("        /// <summary>");
-                                            sr.WriteLine("        /// "+ row["Comment"].ToString() + "");
-                                            sr.WriteLine("        /// </summary>");
-                                        }
-                                        if (row["IsPrimaryKey"].ToString() == "PRI")
-                                        {
-                                            sr.WriteLine("        [Key]");
-                                        }
-                                        sr.Write("        public ");
-                                        if (row["Type"].ToString().IndexOf("varchar") != -1 
-                                            || row["Type"].ToString() == "text")
-                                        {
-                                            sr.WriteLine("string? " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "smallint")
-                                        {
-                                            sr.WriteLine("short " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "datetime")
-                                        {
-                                            sr.WriteLine("DateTime " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "int")
-                                        {
-                                            sr.WriteLine("int " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "decimal")
-                                        {
-                                            sr.WriteLine("decimal " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "bit")
-                                        {
-                                            sr.WriteLine("bool " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "bigint")
-                                        {
-                                            sr.WriteLine("long " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
-                                        if (row["Type"].ToString() == "tinyint")
-                                        {
-                                            sr.WriteLine("sbyte " + row["ColumnName"].ToString() + " { get; set; }");
-                                        }
+                                        sr.WriteLine("        /// <summary>");
+                                        sr.WriteLine("        /// "+ row["Comment"].ToString() + "");
+                                        sr.WriteLine("        /// </summary>");
                                     }
-                                    sr.WriteLine("    }");
-                                    sr.WriteLine("}");
+                                    if (row["IsPrimaryKey"].ToString() == "PRI")
+                                    {
+                                        sr.WriteLine("        [Key]");
+                                    }
+                                    sr.Write("        public ");
+                                    if (row["Type"].ToString().IndexOf("varchar") != -1 
+                                        || row["Type"].ToString() == "text")
+                                    {
+                                        sr.WriteLine("string? " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "smallint")
+                                    {
+                                        sr.WriteLine("short " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "datetime")
+                                    {
+                                        sr.WriteLine("DateTime " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "int")
+                                    {
+                                        sr.WriteLine("int " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "decimal")
+                                    {
+                                        sr.WriteLine("decimal " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "bit")
+                                    {
+                                        sr.WriteLine("bool " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "bigint")
+                                    {
+                                        sr.WriteLine("long " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
+                                    if (row["Type"].ToString() == "tinyint")
+                                    {
+                                        sr.WriteLine("sbyte " + row["ColumnName"].ToString() + " { get; set; }");
+                                    }
                                 }
+                                sr.WriteLine("    }");
+                                sr.WriteLine("}");
                             }
                         }
                     }
                 }
+                
                 MessageBox.Show(Constant.EXECUTE_SUCCESS);
             }
             catch(Exception ex)
@@ -273,7 +286,6 @@ namespace DataCentre.Api.EntityGenerator
                 MessageBox.Show(ex+ex.StackTrace);
             }
         }
-
         private void btnSelectOutPath_Click(object sender, EventArgs e)
         {
             try
@@ -288,12 +300,10 @@ namespace DataCentre.Api.EntityGenerator
                 MessageBox.Show(ex + ex.StackTrace);
             }
         }
-
         private void btnSelectOutPath_Click_1(object sender, EventArgs e)
         {
             btnSelectOutPath_Click(sender, e);
         }
-
         private void btnGenerateModel_Click_1(object sender, EventArgs e)
         {
             btnGenerateModel_Click(sender, e);

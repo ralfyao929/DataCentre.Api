@@ -82,7 +82,7 @@
             this.groupBoxDB.Controls.Add(this.txtIP);
             this.groupBoxDB.Location = new System.Drawing.Point(12, 12);
             this.groupBoxDB.Name = "groupBoxDB";
-            this.groupBoxDB.Size = new System.Drawing.Size(839, 96);
+            this.groupBoxDB.Size = new System.Drawing.Size(864, 96);
             this.groupBoxDB.TabIndex = 2;
             this.groupBoxDB.TabStop = false;
             this.groupBoxDB.Text = "資料庫連線";
