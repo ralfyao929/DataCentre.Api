@@ -123,7 +123,7 @@ namespace DataCentre.Api.EntityGenerator
         private void btnListTable_Click(object sender, EventArgs e)
         {
             clbTableList.Items.Clear();
-            DataSet ds = GetTabColDataSet(string.Format(Constant.LIST_TABLE_SQL, txtDBName.Text));//new DataSet();
+            DataSet ds = GetTabColDataSet(string.Format(Constant.MYSQL_LIST_TABLE_SQL, txtDBName.Text));//new DataSet();
             int idex = 0;
             foreach (DataRow row in ds.Tables[0].Rows)
             {
@@ -177,6 +177,11 @@ namespace DataCentre.Api.EntityGenerator
                     MessageBox.Show(Constant.PLEASE_GENERATE_TABLE_LIST);
                     return;
                 }
+                if(string.IsNullOrEmpty(txtNamespace.Text.Trim()))
+                {
+                    MessageBox.Show(Constant.PLEASE_INPUT_NAMESPACE);
+                    return;
+                }
                 if (cboDBType.Text.ToUpper() == Constant.MYSQL)
                 {
                     for (int i = 0; i < clbTableList.Items.Count; i++)
@@ -185,7 +190,7 @@ namespace DataCentre.Api.EntityGenerator
                         if (chk)
                         {
                             string tableName = clbTableList.Items[i].ToString();
-                            DataSet ds = GetTabColDataSet(string.Format(Constant.SELECT_COLUMN_SQL, txtDBName.Text, tableName));
+                            DataSet ds = GetTabColDataSet(string.Format(Constant.MYSQL_SELECT_COLUMN_SQL, txtDBName.Text, tableName));
                             if (File.Exists(txtOutputPath.Text.Trim() + @"\" + tableName + ".cs"))
                             {
                                 if(!Directory.Exists(txtOutputPath.Text.Trim() + @"\Backup\"))
@@ -199,20 +204,25 @@ namespace DataCentre.Api.EntityGenerator
                                 using (var sr = new StreamWriter(str))
                                 {
                                     sr.WriteLine("using System;");
-                                    sr.WriteLine("using Dapper;");
-                                    sr.WriteLine("public class " + tableName);
+                                    if(radDapper.Checked)
+                                        sr.WriteLine("using Dapper;");
+                                    if(radSystemAnno.Checked)
+                                        sr.WriteLine("using System.ComponentModel.DataAnnotations;");
+                                    sr.WriteLine("namespace " + txtNamespace.Text);
                                     sr.WriteLine("{");
+                                    sr.WriteLine("    public class " + tableName);
+                                    sr.WriteLine("    {");
                                     foreach (DataRow row in ds.Tables[0].Rows)
                                     {
                                         if (row["IsPrimaryKey"].ToString() == "PRI")
                                         {
-                                            sr.WriteLine("    [Key]");
+                                            sr.WriteLine("        [Key]");
                                         }
-                                        sr.Write("    public ");
+                                        sr.Write("        public ");
                                         if (row["Type"].ToString().IndexOf("varchar") != -1 
                                             || row["Type"].ToString() == "text")
                                         {
-                                            sr.WriteLine("string " + row["ColumnName"].ToString() + " { get; set; }");
+                                            sr.WriteLine("string? " + row["ColumnName"].ToString() + " { get; set; }");
                                         }
                                         if (row["Type"].ToString() == "smallint")
                                         {
@@ -243,6 +253,7 @@ namespace DataCentre.Api.EntityGenerator
                                             sr.WriteLine("sbyte " + row["ColumnName"].ToString() + " { get; set; }");
                                         }
                                     }
+                                    sr.WriteLine("    }");
                                     sr.WriteLine("}");
                                 }
                             }
@@ -270,6 +281,16 @@ namespace DataCentre.Api.EntityGenerator
             {
                 MessageBox.Show(ex + ex.StackTrace);
             }
+        }
+
+        private void btnSelectOutPath_Click_1(object sender, EventArgs e)
+        {
+            btnSelectOutPath_Click(sender, e);
+        }
+
+        private void btnGenerateModel_Click_1(object sender, EventArgs e)
+        {
+            btnGenerateModel_Click(sender, e);
         }
     }
 }

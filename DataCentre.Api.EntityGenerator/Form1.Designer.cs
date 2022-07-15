@@ -44,18 +44,28 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.grpModelSection = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnGenerateModel = new System.Windows.Forms.Button();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
             this.btnSelectOutPath = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtNamespace = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.radSystemAnno = new System.Windows.Forms.RadioButton();
+            this.radDapper = new System.Windows.Forms.RadioButton();
+            this.label8 = new System.Windows.Forms.Label();
             this.btnListTable = new System.Windows.Forms.Button();
             this.clbTableList = new System.Windows.Forms.CheckedListBox();
             this.groupBoxDB.SuspendLayout();
             this.grpModelSection.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxDB
             // 
+            this.groupBoxDB.BackColor = System.Drawing.Color.NavajoWhite;
             this.groupBoxDB.Controls.Add(this.label6);
             this.groupBoxDB.Controls.Add(this.txtDBName);
             this.groupBoxDB.Controls.Add(this.btnTestConnection);
@@ -72,7 +82,7 @@
             this.groupBoxDB.Controls.Add(this.txtIP);
             this.groupBoxDB.Location = new System.Drawing.Point(12, 12);
             this.groupBoxDB.Name = "groupBoxDB";
-            this.groupBoxDB.Size = new System.Drawing.Size(776, 96);
+            this.groupBoxDB.Size = new System.Drawing.Size(839, 96);
             this.groupBoxDB.TabIndex = 2;
             this.groupBoxDB.TabStop = false;
             this.groupBoxDB.Text = "資料庫連線";
@@ -110,7 +120,7 @@
             this.cboDBType.Items.AddRange(new object[] {
             "MySQL",
             "MSSQL"});
-            this.cboDBType.Location = new System.Drawing.Point(290, 64);
+            this.cboDBType.Location = new System.Drawing.Point(285, 64);
             this.cboDBType.Name = "cboDBType";
             this.cboDBType.Size = new System.Drawing.Size(95, 24);
             this.cboDBType.TabIndex = 12;
@@ -202,56 +212,132 @@
             // 
             // grpModelSection
             // 
-            this.grpModelSection.Controls.Add(this.label7);
-            this.grpModelSection.Controls.Add(this.btnGenerateModel);
-            this.grpModelSection.Controls.Add(this.txtOutputPath);
-            this.grpModelSection.Controls.Add(this.btnSelectOutPath);
+            this.grpModelSection.BackColor = System.Drawing.Color.LightSalmon;
+            this.grpModelSection.Controls.Add(this.groupBox2);
+            this.grpModelSection.Controls.Add(this.groupBox1);
             this.grpModelSection.Controls.Add(this.btnListTable);
             this.grpModelSection.Controls.Add(this.clbTableList);
             this.grpModelSection.Location = new System.Drawing.Point(12, 132);
             this.grpModelSection.Name = "grpModelSection";
-            this.grpModelSection.Size = new System.Drawing.Size(839, 403);
+            this.grpModelSection.Size = new System.Drawing.Size(865, 403);
             this.grpModelSection.TabIndex = 17;
             this.grpModelSection.TabStop = false;
             this.grpModelSection.Text = "產生Entity";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.btnGenerateModel);
+            this.groupBox2.Controls.Add(this.txtOutputPath);
+            this.groupBox2.Controls.Add(this.btnSelectOutPath);
+            this.groupBox2.Location = new System.Drawing.Point(213, 181);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(646, 216);
+            this.groupBox2.TabIndex = 29;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "輸出程式";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label7.Font = new System.Drawing.Font("微軟正黑體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(213, 86);
+            this.label7.Location = new System.Drawing.Point(8, 86);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(620, 60);
-            this.label7.TabIndex = 22;
+            this.label7.Size = new System.Drawing.Size(622, 62);
+            this.label7.TabIndex = 26;
             this.label7.Text = "※此程式會依據上面的資料庫設定，抓取Table、Column定義並產出C#的程式碼\r\n※將產生的程式碼，放到Model的專案後替換原有的檔案便可以產出最新的Mod" +
-    "el dll檔\r\n※此程式碼僅提供.NET程式使用\r\n";
+    "el dll檔\r\n※此程式碼僅提供.NET或.NET Core程式使用\r\n";
             // 
             // btnGenerateModel
             // 
-            this.btnGenerateModel.Location = new System.Drawing.Point(570, 51);
+            this.btnGenerateModel.Location = new System.Drawing.Point(365, 51);
             this.btnGenerateModel.Name = "btnGenerateModel";
             this.btnGenerateModel.Size = new System.Drawing.Size(103, 23);
-            this.btnGenerateModel.TabIndex = 21;
+            this.btnGenerateModel.TabIndex = 25;
             this.btnGenerateModel.Text = "產出Model程式";
             this.btnGenerateModel.UseVisualStyleBackColor = true;
-            this.btnGenerateModel.Click += new System.EventHandler(this.btnGenerateModel_Click);
+            this.btnGenerateModel.Click += new System.EventHandler(this.btnGenerateModel_Click_1);
             // 
             // txtOutputPath
             // 
-            this.txtOutputPath.Location = new System.Drawing.Point(212, 51);
+            this.txtOutputPath.Location = new System.Drawing.Point(7, 51);
             this.txtOutputPath.Name = "txtOutputPath";
             this.txtOutputPath.Size = new System.Drawing.Size(352, 23);
-            this.txtOutputPath.TabIndex = 20;
+            this.txtOutputPath.TabIndex = 24;
             // 
             // btnSelectOutPath
             // 
-            this.btnSelectOutPath.Location = new System.Drawing.Point(212, 22);
+            this.btnSelectOutPath.Location = new System.Drawing.Point(7, 22);
             this.btnSelectOutPath.Name = "btnSelectOutPath";
             this.btnSelectOutPath.Size = new System.Drawing.Size(110, 23);
-            this.btnSelectOutPath.TabIndex = 19;
+            this.btnSelectOutPath.TabIndex = 23;
             this.btnSelectOutPath.Text = "選擇輸出路徑";
             this.btnSelectOutPath.UseVisualStyleBackColor = true;
-            this.btnSelectOutPath.Click += new System.EventHandler(this.btnSelectOutPath_Click);
+            this.btnSelectOutPath.Click += new System.EventHandler(this.btnSelectOutPath_Click_1);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.groupBox1.Controls.Add(this.txtNamespace);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.radSystemAnno);
+            this.groupBox1.Controls.Add(this.radDapper);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Location = new System.Drawing.Point(213, 22);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(646, 144);
+            this.groupBox1.TabIndex = 28;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "程式碼設定";
+            // 
+            // txtNamespace
+            // 
+            this.txtNamespace.Location = new System.Drawing.Point(7, 107);
+            this.txtNamespace.Name = "txtNamespace";
+            this.txtNamespace.Size = new System.Drawing.Size(352, 23);
+            this.txtNamespace.TabIndex = 32;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 88);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(55, 16);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "命名空間";
+            // 
+            // radSystemAnno
+            // 
+            this.radSystemAnno.AutoSize = true;
+            this.radSystemAnno.Location = new System.Drawing.Point(138, 55);
+            this.radSystemAnno.Name = "radSystemAnno";
+            this.radSystemAnno.Size = new System.Drawing.Size(272, 20);
+            this.radSystemAnno.TabIndex = 30;
+            this.radSystemAnno.TabStop = true;
+            this.radSystemAnno.Text = "System.ComponentModel.DataAnnotations";
+            this.radSystemAnno.UseVisualStyleBackColor = true;
+            // 
+            // radDapper
+            // 
+            this.radDapper.AutoSize = true;
+            this.radDapper.Location = new System.Drawing.Point(6, 55);
+            this.radDapper.Name = "radDapper";
+            this.radDapper.Size = new System.Drawing.Size(68, 20);
+            this.radDapper.TabIndex = 29;
+            this.radDapper.TabStop = true;
+            this.radDapper.Text = "Dapper";
+            this.radDapper.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 29);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 16);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "資料標記選項";
             // 
             // btnListTable
             // 
@@ -275,7 +361,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(866, 547);
+            this.ClientSize = new System.Drawing.Size(888, 547);
             this.Controls.Add(this.grpModelSection);
             this.Controls.Add(this.groupBoxDB);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -284,7 +370,10 @@
             this.groupBoxDB.ResumeLayout(false);
             this.groupBoxDB.PerformLayout();
             this.grpModelSection.ResumeLayout(false);
-            this.grpModelSection.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -309,9 +398,16 @@
         private GroupBox grpModelSection;
         private Button btnListTable;
         private CheckedListBox clbTableList;
-        private Button btnSelectOutPath;
-        private TextBox txtOutputPath;
-        private Button btnGenerateModel;
+        private GroupBox groupBox1;
+        private TextBox txtNamespace;
+        private Label label9;
+        private RadioButton radSystemAnno;
+        private RadioButton radDapper;
+        private Label label8;
+        private GroupBox groupBox2;
         private Label label7;
+        private Button btnGenerateModel;
+        private TextBox txtOutputPath;
+        private Button btnSelectOutPath;
     }
 }

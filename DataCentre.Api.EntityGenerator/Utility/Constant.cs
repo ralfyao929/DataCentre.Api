@@ -24,14 +24,15 @@ namespace DataCentre.Api.EntityGenerator.Utility
         public static string MS_SQL { get; } = "MSSQL";
         public static string PLEASE_INPUT_OUT_PATH { get; } = "請設定程式輸出路徑!";
         public static string? DB_SET_JSON_PATH { get; } = @".\dbSet.json";
-        public static string? LIST_TABLE_SQL { get; } =
+        public static string? MYSQL_LIST_TABLE_SQL { get; } =
                                 @"SELECT TABLE_NAME TableName
                                     FROM INFORMATION_SCHEMA.TABLES
 	                               where table_schema='{0}'";
         public static string PLEASE_GENERATE_TABLE_LIST { get; }="請先產生Table列表!";
-        public static string? SELECT_COLUMN_SQL { get; } =
+        public static string? MYSQL_SELECT_COLUMN_SQL { get; } =
                                 @"SELECT COLUMN_NAME ColumnName, DATA_TYPE Type, COLUMN_KEY IsPrimaryKey
                                     FROM INFORMATION_SCHEMA.COLUMNS
-	                               where table_schema='{0}' AND TABLE_NAME = '{1}' ORDER BY COLUMN_KEY DESC;";
+	                               where table_schema='{0}' AND TABLE_NAME = '{1}' ORDER BY ORDINAL_POSITION;";
+        public static string PLEASE_INPUT_NAMESPACE { get; } = "請輸入命名空間!";
     }
 }
