@@ -5,7 +5,7 @@ namespace DataCentre.Api.Models
 {
     public class LoginDataView
     {
-        public LoginData loginData { get; set; }
+        public UserBase loginData { get; set; }
         public Token Token { get; set; }
     }
 }

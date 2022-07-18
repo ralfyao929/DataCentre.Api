@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Contracts
 {
-    public interface ILoginDataRepository : IRepositoryBase<LoginData>
+    public interface ILoginDataRepository : IRepositoryBase<UserBase>
     {
     }
 }

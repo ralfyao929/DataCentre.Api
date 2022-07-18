@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Repository
 {
-    public class LoginDataRepository : RepositoryBase<LoginData>, ILoginDataRepository
+    public class LoginDataRepository : RepositoryBase<UserBase>, ILoginDataRepository
     {
         public LoginDataRepository(DapperContext repositoryContext) : base(repositoryContext)
         {

@@ -17,14 +17,16 @@ namespace DataCentre.Api.Models.Authentication
         ////幾秒過期
         //public int expires_in { get; set; }
         //產生 Token
-        public static Token Create(LoginData User, IRepositoryWrapper RepositoryWrapper)
+        public static Token Create(UserBase User, IRepositoryWrapper RepositoryWrapper)
         {
             var exp = 1200;   //過期時間(秒)
             var payload = new JwtAuthObject()
             {
-                Id = User.Username,
+                Id = User.UserBaseID,
+                No = User.UserBaseNo,
+                Name = User.UserBaseName,
                 exp = DateTime.Now.AddSeconds(exp),
-                PrivilegeList = RepositoryWrapper.UserPrivilege.FindByCondition(new { PrivilegeGroup = User.PrivilegeGroup }).ToList()
+                //PrivilegeList = RepositoryWrapper.UserPrivilege.FindByCondition(new { PrivilegeGroup = User.PrivilegeGroup }).ToList()
             };
             return new Token()
             {
