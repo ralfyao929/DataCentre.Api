@@ -23,6 +23,7 @@ namespace DataCentre.Api.Controllers
         [HttpPost]
         public ApiResult<LoginDataView> Post(LoginData name)
         {
+            //產生回傳訊息物件(這部分使否統一在BaseController實作?)
 			ApiResult<LoginDataView> apiResult = new ApiResult<LoginDataView>(_localizer.GetValue<string>("AppSettings:localize"));
             _logger.LogInfo("login user name:"+name.Username+", password:"+name.Password);
             RequestBody = JsonConvert.SerializeObject(name);
@@ -30,11 +31,13 @@ namespace DataCentre.Api.Controllers
             if (logins.Count() > 0)
             {
                 _logger.LogInfo("has data");
+                // Get Token
                 LoginDataView loginView = new LoginDataView();
                 loginView.loginData = (UserBase)logins.ToList()[0];
                 loginView.Token = GetToken(loginView.loginData, _repositoryWrapper);
                 apiResult.Code = "0000";
                 apiResult.Result = loginView;
+                // Backend write APILog information
                 APILog log = new APILog();
                 log.APIUrl = UriHelper.GetDisplayUrl(Request);
                 log.Method = Request.Method;
@@ -44,11 +47,12 @@ namespace DataCentre.Api.Controllers
                 log.User = name.Username;
                 log.CreatedTime = DateTime.Now;
                 _repositoryWrapper.APILog.Create(log);
-                ResponseBody = JsonConvert.SerializeObject(apiResult);
+                //ResponseBody = JsonConvert.SerializeObject(apiResult);
                 return apiResult;
             }
             else
             {
+                // 找不到相對應的userID，可能為密碼或帳號錯誤
                 apiResult.Code = "1002";
                 return apiResult;
             }

@@ -10,7 +10,7 @@ namespace DataCentre.Api.Entity.Models
         [Key]
         public int ProductID { get; set; }
         /// <summary>
-        /// 產品資料名稱
+        /// 產品資料細項
         /// </summary>
         public string? ProductName { get; set; }
         /// <summary>
