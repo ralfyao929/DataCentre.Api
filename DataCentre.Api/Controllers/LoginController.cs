@@ -38,14 +38,14 @@ namespace DataCentre.Api.Controllers
                 apiResult.Code = "0000";
                 apiResult.Result = loginView;
                 // Backend write APILog information
-                APILog log = new APILog();
-                log.APIUrl = UriHelper.GetDisplayUrl(Request);
-                log.Method = Request.Method;
-                log.RequestJson = JsonConvert.SerializeObject(name);
-                log.ResponseCode = Response.StatusCode.ToString();
-                log.ResponseJson = JsonConvert.SerializeObject(apiResult);
-                log.User = name.Username;
-                log.CreatedTime = DateTime.Now;
+                LogAPI log = new LogAPI();
+                log.LogAPIUrl = UriHelper.GetDisplayUrl(Request);
+                log.LogAPIMethod = Request.Method;
+                log.LogAPIInputData = JsonConvert.SerializeObject(name);
+                log.LogAPIResponeCode = Response.StatusCode.ToString();
+                log.LogAPIOuptData = JsonConvert.SerializeObject(apiResult);
+                log.LogAPICallUser = name.Username;
+                log.createdTime = DateTime.Now;
                 _repositoryWrapper.APILog.Create(log);
                 //ResponseBody = JsonConvert.SerializeObject(apiResult);
                 return apiResult;

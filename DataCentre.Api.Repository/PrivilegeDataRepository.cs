@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataCentre.Api.Repository
 {
-    public class PrivilegeDataRepository : RepositoryBase<PrivilegeData>, IPrivilegeDataRepository
+    public class PrivilegeDataRepository : RepositoryBase<AuthCtrl>, IPrivilegeDataRepository
     {
         public PrivilegeDataRepository(DapperContext repositoryContext) : base(repositoryContext)
         {

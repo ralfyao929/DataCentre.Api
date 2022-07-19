@@ -58,37 +58,37 @@ namespace DataCentre.Api.Controllers
             try
             {
                 var LoginDatas = _repositoryWrapper.LoginData.FindByCondition(new { id = data.id }, tran);
-                if(LoginDatas.Count() > 0)
-                {
-                    LoginData Login = LoginDatas.ToList()[0];
-                    IDbCommand cmd = conn.CreateCommand();
-                    string delCmd = "DELETE FROM UserPrivileges WHERE PrivilegeGroup=@PrivilegeGroup";
-                    cmd.CommandText = delCmd;
-                    cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
-                    delCmd += ", @PrivilegeGroup="+ Login.PrivilegeGroup;
-                    _logger.LogInfo(delCmd);
-                    cmd.Transaction = tran;
-                    cmd.ExecuteNonQuery();
-                    foreach(int ids in data.idList)
-                    {
-                        cmd = conn.CreateCommand();
-                        delCmd = "INSERT INTO UserPrivileges (PrivilegeGroup, PrivilegeId) VALUES(@PrivilegeGroup, @PrivilegeId)";
-                        cmd.CommandText = delCmd;
-                        cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
-                        cmd.Parameters.Add(new MySqlParameter("@PrivilegeId", ids));
-                        delCmd += ", @PrivilegeGroup=" + Login.PrivilegeGroup;
-                        delCmd += ", @PrivilegeId=" + ids;
-                        _logger.LogInfo(delCmd);
-                        cmd.Transaction = tran;
-                        cmd.ExecuteNonQuery();
-                    }
-                    result.Code = "0000";
-                }
-                else
-                {
-                    result.Code = "9999";
-                    result.Message = "未知的錯誤，找不到帳號相關資訊";
-                }
+                //if(LoginDatas.Count() > 0)
+                //{
+                //    UserBase Login = LoginDatas.ToList()[0];
+                //    IDbCommand cmd = conn.CreateCommand();
+                //    string delCmd = "DELETE FROM UserPrivileges WHERE PrivilegeGroup=@PrivilegeGroup";
+                //    cmd.CommandText = delCmd;
+                //    cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
+                //    delCmd += ", @PrivilegeGroup="+ Login.PrivilegeGroup;
+                //    _logger.LogInfo(delCmd);
+                //    cmd.Transaction = tran;
+                //    cmd.ExecuteNonQuery();
+                //    foreach(int ids in data.idList)
+                //    {
+                //        cmd = conn.CreateCommand();
+                //        delCmd = "INSERT INTO UserPrivileges (PrivilegeGroup, PrivilegeId) VALUES(@PrivilegeGroup, @PrivilegeId)";
+                //        cmd.CommandText = delCmd;
+                //        cmd.Parameters.Add(new MySqlParameter("@PrivilegeGroup", Login.PrivilegeGroup));
+                //        cmd.Parameters.Add(new MySqlParameter("@PrivilegeId", ids));
+                //        delCmd += ", @PrivilegeGroup=" + Login.PrivilegeGroup;
+                //        delCmd += ", @PrivilegeId=" + ids;
+                //        _logger.LogInfo(delCmd);
+                //        cmd.Transaction = tran;
+                //        cmd.ExecuteNonQuery();
+                //    }
+                //    result.Code = "0000";
+                //}
+                //else
+                //{
+                //    result.Code = "9999";
+                //    result.Message = "未知的錯誤，找不到帳號相關資訊";
+                //}
                 tran.Commit();
                 return result;
             }

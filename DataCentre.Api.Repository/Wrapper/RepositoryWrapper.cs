@@ -1,6 +1,8 @@
 ﻿using DataCentre.Api.Contracts;
+using DataCentre.Api.Contracts.Admin;
 using DataCentre.Api.Contracts.Product;
 using DataCentre.Api.Entity.Models;
+using DataCentre.Api.Repository.Admin;
 using DataCentre.Api.Repository.Product;
 
 namespace DataCentre.Api.Repository.Wrapper
@@ -21,6 +23,7 @@ namespace DataCentre.Api.Repository.Wrapper
         private IProductTypeDataRepository? _productTypeDataRepository;
         private IProductClassDataRepository? _productClassDataRepository;
         private IProductDataRepository? _productData;
+        private IMenuDataRepository? _menuData;
         // Implementation
         public ILoginDataRepository LoginData
         {
@@ -107,6 +110,17 @@ namespace DataCentre.Api.Repository.Wrapper
                     _productData = new ProductDataRepository(_repositoryContext);
                 }
                 return _productData;
+            }
+        }
+        public IMenuDataRepository MenuData 
+        {
+            get
+            {
+                if (_menuData == null)
+                {
+                    _menuData = new MenuDataRepository(_repositoryContext);
+                }
+                return _menuData;
             }
         }
         public DapperContext GetRepositoryContext()

@@ -38,10 +38,10 @@ namespace DataCentre.Api.Controllers
                             token,
                             Encoding.UTF8.GetBytes(Utility.Utility.key),
                             JwsAlgorithm.HS256);
-                var privList = from privilegeList in jwtObject.PrivilegeList
-                               join privilege in _repositoryWrapper.PrivilegeData.findAll() on privilegeList.PrivilegeId equals privilege.Id
-                               select new { privilege.Id, privilege.PrivilegeName, privilege.PrivilegeType };
-                var prodReviewList = _repositoryWrapper.ProductReviewData.FindByCondition(new { reviewStatus = 0 });
+                //var privList = from privilegeList in jwtObject.PrivilegeList
+                //               join privilege in _repositoryWrapper.PrivilegeData.findAll() on privilegeList.PrivilegeId equals privilege.Id
+                //               select new { privilege.Id, privilege.PrivilegeName, privilege.PrivilegeType };
+                //var prodReviewList = _repositoryWrapper.ProductReviewData.FindByCondition(new { reviewStatus = 0 });
                 //var custReviewList = _repositoryWrapper.CustomerReviewData.FindByCondition(new { ReviewStatus = 0 });
                 //var suppReviewList = _repositoryWrapper.SupplierReviewData.FindByCondition(new { ReviewStatus = 0 });
                 //var cloudReviewList = _repositoryWrapper.CloudAccountManageReviewData.FindByCondition(new { ReviewStatus = 0 });
@@ -63,7 +63,7 @@ namespace DataCentre.Api.Controllers
                 //suppNotify.count = suppReviewList.Count();
 
                 HomeView HomeViews = new HomeView();
-                HomeViews.data = privList;
+                //HomeViews.data = privList;
                 HomeViews.notify = new List<Notification>();
                 //HomeViews.notify.Add(cloudNotify);
                 //HomeViews.notify.Add(prodNotify);

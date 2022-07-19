@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataCentre.Api.Contracts
+namespace DataCentre.Api.Contracts.Admin
 {
-    public interface IPrivilegeDataRepository : IRepositoryBase<AuthCtrl>
+    public interface IMenuDataRepository : IRepositoryBase<Menu>
     {
     }
 }

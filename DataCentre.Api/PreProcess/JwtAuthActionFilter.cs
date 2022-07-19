@@ -62,30 +62,17 @@ namespace DataCentre.Api.PreProcess
                     }
                     IPrivilegeDataRepository privilegeData = ((BaseController)actionContext.Controller).GetRepositoryWrapper().PrivilegeData;
                     bool hasPriv = false;
-                    jwtObject.PrivilegeList.ForEach(p =>
+                    var privilegeList = privilegeData.FindByCondition(new { UserID = jwtObject.Id });
+                    privilegeList.ToList().ForEach(p => 
                     {
-                        var dataPriv = privilegeData.FindByCondition(new { Id = p.PrivilegeId });
-                        PrivilegeData p1 = null;
-                        if (dataPriv.Count() > 0)
-                        {
-                            p1 = (PrivilegeData)dataPriv.ToArray()[0];
-                        }
-                        if (p1 != null && !string.IsNullOrEmpty(p1.PrivilegeUrl))
-                        {
-                            string[] privUrl = p1.PrivilegeUrl.Split(',');
-                            foreach (string privUrlElm in privUrl)
+                        var menuList = ((BaseController)actionContext.Controller).GetRepositoryWrapper().MenuData.FindByCondition(new { MenuParentCode=p.FuncListID });
+                        menuList.ToList().ForEach(m => 
+                        { 
+                            if(m.MenuCodeName == actionContext.HttpContext.Request.Path.ToString())
                             {
-                                if (actionContext.HttpContext.Request.Path.ToString().IndexOf(privUrlElm) != -1)
-                                {
-                                    hasPriv = true;
-                                    break;
-                                }
+                                hasPriv = true;
                             }
-                        }
-                        if (hasPriv)
-                        {
-                            return;
-                        }
+                        });
                     });
                     if (!hasPriv)
                     {
@@ -96,6 +83,10 @@ namespace DataCentre.Api.PreProcess
                 }
                 catch (Exception ex)
                 {
+                    using(StreamWriter writer = File.AppendText(@"./err"+DateTime.Now.ToString("yyyyMmddHHmmssfff")+".log"))
+                    {
+                        writer.WriteLine(ex + ex.StackTrace);
+                    }
                     setErrorResponse(actionContext, "9999", "未知的錯誤");
                     return;
                     //return;
@@ -117,14 +108,14 @@ namespace DataCentre.Api.PreProcess
                         context.HttpContext.Request.Headers.Authorization,
                         Encoding.UTF8.GetBytes(Utility.Utility.key),
                         JwsAlgorithm.HS256);
-                APILog log = new APILog();
-                log.APIUrl = UriHelper.GetDisplayUrl(context.HttpContext.Request);
-                log.Method = context.HttpContext.Request.Method;
-                log.RequestJson = RequestBody;//serJsonDetails.ToString();
-                log.ResponseCode = context.HttpContext.Response.StatusCode.ToString();
-                log.ResponseJson = (result != null && result.Value != null ? JsonConvert.SerializeObject(result.Value) : String.Empty);
-                log.User = jwtObject.Id;
-                log.CreatedTime = DateTime.Now;
+                LogAPI log = new LogAPI();
+                log.LogAPIUrl = UriHelper.GetDisplayUrl(context.HttpContext.Request);
+                log.LogAPIMethod = context.HttpContext.Request.Method;
+                log.LogAPIInputData = RequestBody;//serJsonDetails.ToString();
+                log.LogAPIResponeCode = context.HttpContext.Response.StatusCode.ToString();
+                log.LogAPIOuptData = (result != null && result.Value != null ? JsonConvert.SerializeObject(result.Value) : String.Empty);
+                log.LogAPICallUser = jwtObject.Id.ToString();
+                log.createdTime = DateTime.Now;
                 ((BaseController)context.Controller).GetRepositoryWrapper().APILog.Create(log);
             }
         }

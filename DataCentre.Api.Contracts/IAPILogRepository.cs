@@ -7,7 +7,7 @@ using DataCentre.Api.Entity.Models;
 
 namespace DataCentre.Api.Contracts
 {
-    public interface IAPILogRepository : IRepositoryBase<APILog>
+    public interface IAPILogRepository : IRepositoryBase<LogAPI>
     {
     }
 }

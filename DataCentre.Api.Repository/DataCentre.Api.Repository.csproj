@@ -11,9 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DataCentre.Api.Contracts">
-      <HintPath>..\DataCentre.Api.Contracts\bin\Debug\net6.0\DataCentre.Api.Contracts.dll</HintPath>
-    </Reference>
     <Reference Include="DataCentre.Api.Entity">
       <HintPath>..\DataCentre.Api.Entity\bin\Debug\net6.0\DataCentre.Api.Entity.dll</HintPath>
     </Reference>

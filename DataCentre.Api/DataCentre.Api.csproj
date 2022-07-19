@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GoogleAuthenticatorService.Core" Version="1.0.2" />
     <PackageReference Include="jose-jwt" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

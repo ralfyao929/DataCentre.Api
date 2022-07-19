@@ -9,8 +9,6 @@ namespace DataCentre.Api.Models
         private string _lang = "";
         private ResponseCode _responseCode = null;//;new ResponseCode(_lang);
         private IStringLocalizer<Localize.Resources> _localizer;
-        public ApiResult()
-        { }
         public ApiResult(IStringLocalizer<Localize.Resources> Localizer)
         {
             _localizer = Localizer;

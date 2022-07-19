@@ -8,7 +8,7 @@ using DataCentre.Api.Entity.Models;
 
 namespace DataCentre.Api.Repository
 {
-    public class APILogRepository : RepositoryBase<APILog>, IAPILogRepository
+    public class APILogRepository : RepositoryBase<LogAPI>, IAPILogRepository
     {
         public APILogRepository(DapperContext repositoryContext) : base(repositoryContext)
         {
